@@ -1,0 +1,171 @@
+.section {
+  position: relative;
+  padding: 120px 0;
+  background:
+    radial-gradient(circle at left top, rgba(255, 0, 0, 0.08), transparent 20%),
+    linear-gradient(180deg, #070707 0%, #0d0d0d 100%);
+  overflow: hidden;
+}
+
+.container {
+  width: min(1280px, calc(100% - 40px));
+  margin: 0 auto;
+}
+
+.sliderShell {
+  position: relative;
+  overflow: hidden;
+  padding: 16px 0 10px;
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(0, 0, 0, 1) 8%,
+    rgba(0, 0, 0, 1) 92%,
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(0, 0, 0, 1) 8%,
+    rgba(0, 0, 0, 1) 92%,
+    transparent 100%
+  );
+}
+
+.sliderTrack {
+  display: flex;
+  align-items: stretch;
+  gap: 22px;
+  width: max-content;
+  animation: reelFlow 42s linear infinite;
+}
+
+.sliderShell:hover .sliderTrack {
+  animation-play-state: paused;
+}
+
+.card {
+  width: clamp(220px, 20vw, 290px);
+  flex: 0 0 auto;
+  border-radius: 28px;
+  overflow: hidden;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.06),
+    rgba(255, 255, 255, 0.025)
+  );
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 20px 42px rgba(0, 0, 0, 0.24);
+  transition:
+    transform 0.35s ease,
+    border-color 0.35s ease,
+    box-shadow 0.35s ease;
+}
+
+.card:hover {
+  transform: translateY(-10px) rotate(0deg) scale(1.02);
+  border-color: rgba(255, 80, 80, 0.24);
+  box-shadow: 0 26px 48px rgba(0, 0, 0, 0.32);
+}
+
+.cardTiltLeft {
+  transform: rotate(-1.2deg);
+}
+
+.cardTiltRight {
+  transform: rotate(1.2deg);
+}
+
+.imageWrap {
+  position: relative;
+  aspect-ratio: 9 / 16;
+  width: 100%;
+  overflow: hidden;
+  background: #0a0a0a;
+}
+
+.image {
+  object-fit: cover;
+  transition: transform 0.6s ease, filter 0.6s ease;
+  filter: brightness(0.88) contrast(1.06) saturate(1.02);
+}
+
+.card:hover .image {
+  transform: scale(1.06);
+  filter: brightness(0.95) contrast(1.08) saturate(1.06);
+}
+
+.imageOverlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to top, rgba(0, 0, 0, 0.62), rgba(0, 0, 0, 0.04) 38%, rgba(0, 0, 0, 0.18)),
+    linear-gradient(135deg, rgba(255, 0, 0, 0.08), transparent 34%);
+  pointer-events: none;
+}
+
+.content {
+  padding: 18px 18px 20px;
+}
+
+.content h3 {
+  margin: 0 0 10px;
+  color: #ffffff;
+  font-size: 22px;
+  line-height: 1.2;
+}
+
+.content p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 14px;
+  line-height: 1.75;
+}
+
+@keyframes reelFlow {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(-50% - 11px));
+  }
+}
+
+@media (max-width: 1100px) {
+  .card {
+    width: clamp(210px, 28vw, 270px);
+  }
+}
+
+@media (max-width: 700px) {
+  .section {
+    padding: 88px 0;
+  }
+
+  .container {
+    width: calc(100% - 24px);
+  }
+
+  .sliderShell {
+    mask-image: none;
+    -webkit-mask-image: none;
+  }
+
+  .sliderTrack {
+    gap: 16px;
+    animation-duration: 34s;
+  }
+
+  .card {
+    width: 72vw;
+    border-radius: 22px;
+  }
+
+  .content {
+    padding: 16px 16px 18px;
+  }
+
+  .content h3 {
+    font-size: 20px;
+  }
+}

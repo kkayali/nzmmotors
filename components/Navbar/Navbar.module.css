@@ -1,0 +1,326 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 1200;
+  backdrop-filter: blur(16px);
+  background:
+    linear-gradient(180deg, rgba(6, 6, 6, 0.94), rgba(6, 6, 6, 0.8));
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  overflow: hidden;
+  padding-top: env(safe-area-inset-top);
+}
+
+.headerGlow {
+  position: absolute;
+  top: -70px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 440px;
+  height: 160px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 0, 0, 0.1), transparent 72%);
+  filter: blur(34px);
+  pointer-events: none;
+}
+
+.navbar {
+  position: relative;
+  z-index: 2;
+  width: min(1280px, calc(100% - 40px));
+  margin: 0 auto;
+  min-height: 110px;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 28px;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.logoWrap {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 84px;
+  padding: 6px 0;
+}
+
+.logo {
+  width: auto;
+  height: 120px;
+  object-fit: contain;
+  display: block;
+  filter:
+    drop-shadow(0 8px 22px rgba(255, 0, 0, 0.12))
+    drop-shadow(0 2px 8px rgba(255, 255, 255, 0.06));
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.brand:hover .logo {
+  transform: translateY(-1px) scale(1.015);
+  filter:
+    drop-shadow(0 12px 28px rgba(255, 0, 0, 0.16))
+    drop-shadow(0 2px 8px rgba(255, 255, 255, 0.08));
+}
+
+.desktopLinks {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 38px;
+}
+
+.navLink {
+  position: relative;
+  color: rgba(255, 255, 255, 0.88);
+  text-decoration: none;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 0.1px;
+  transition: color 0.25s ease;
+  white-space: nowrap;
+}
+
+.navLink::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -11px;
+  width: 0;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #ff2d2d, #ff8a8a);
+  transition: width 0.25s ease;
+}
+
+.navLink:hover {
+  color: #ffffff;
+}
+
+.navLink:hover::after {
+  width: 100%;
+}
+
+.desktopActions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.iconButton {
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.iconButton:hover {
+  transform: translateY(-2px);
+}
+
+.instagramButton {
+  color: #ffffff;
+  background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045);
+  box-shadow: 0 14px 26px rgba(253, 29, 29, 0.16);
+  position: relative;
+  z-index: 1;
+}
+
+.instagramButton::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #fcb045, #fd1d1d, #833ab4);
+  border-radius: 16px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+}
+
+.instagramButton:hover::before {
+  opacity: 1;
+}
+
+.locationButton {
+  color: #ffffff;
+  background: linear-gradient(135deg, #1f1f1f, #343434);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.callButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 54px;
+  padding: 0 24px;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 800;
+  font-size: 17px;
+  color: #ffffff;
+  background: linear-gradient(135deg, #ff1b1b, #b60000);
+  box-shadow: 0 16px 30px rgba(255, 0, 0, 0.22);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.callButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 20px 36px rgba(255, 0, 0, 0.3);
+}
+
+.menuButton {
+  width: 50px;
+  height: 50px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.04);
+  color: #ffffff;
+  border-radius: 14px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.mobilePanel {
+  display: none;
+}
+
+@media (max-width: 1180px) {
+  .navbar {
+    min-height: 100px;
+  }
+
+  .logo {
+    height: 78px;
+  }
+
+  .desktopLinks {
+    gap: 28px;
+  }
+
+  .navLink {
+    font-size: 16px;
+  }
+
+  .callButton {
+    font-size: 16px;
+    padding: 0 20px;
+  }
+}
+
+@media (max-width: 980px) {
+  .navbar {
+    width: calc(100% - 24px);
+    min-height: 82px;
+    grid-template-columns: auto 1fr auto;
+  }
+
+  .logoWrap {
+    min-height: 62px;
+  }
+
+  .logo {
+    height: 56px;
+  }
+
+  .desktopLinks,
+  .desktopActions {
+    display: none;
+  }
+
+  .menuButton {
+    display: inline-flex;
+  }
+
+  .mobilePanel {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.28s ease;
+    background: rgba(8, 8, 8, 0.97);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    max-height: calc(100vh - 82px);
+    overflow-y: auto;
+  }
+
+  .mobilePanelOpen {
+    grid-template-rows: 1fr;
+  }
+
+  .mobileLinks {
+    overflow: hidden;
+    width: calc(100% - 24px);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .mobilePanelOpen .mobileLinks {
+    padding: 16px 0 18px;
+  }
+
+  .mobileLink {
+    display: flex;
+    align-items: center;
+    min-height: 50px;
+    padding: 0 16px;
+    border-radius: 14px;
+    text-decoration: none;
+    font-weight: 700;
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .mobileActions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 4px;
+  }
+
+  .mobileCall,
+  .mobileIconLink {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 50px;
+    padding: 0 16px;
+    border-radius: 14px;
+    text-decoration: none;
+    font-weight: 800;
+    color: #ffffff;
+  }
+
+  .mobileCall {
+    background: linear-gradient(135deg, #ff1b1b, #b60000);
+  }
+
+  .mobileInstagram {
+    background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045);
+  }
+
+  .mobileLocation {
+    background: linear-gradient(135deg, #202020, #343434);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+}
+
+@media (max-width: 560px) {
+  .navbar {
+    min-height: 76px;
+  }
+
+  .logo {
+    height: 48px;
+  }
+}

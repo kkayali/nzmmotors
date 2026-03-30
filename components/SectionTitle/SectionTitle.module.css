@@ -1,0 +1,49 @@
+.wrapper {
+  max-width: 760px;
+  margin-bottom: 32px;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  padding: 0 14px;
+  border-radius: 999px;
+  background: rgba(255, 0, 0, 0.08);
+  border: 1px solid rgba(255, 0, 0, 0.12);
+  color: #d31d1d;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+
+.title {
+  margin: 0 0 12px;
+  font-size: clamp(30px, 5vw, 52px);
+  line-height: 1.05;
+  letter-spacing: -1px;
+  color: #111111;
+}
+
+.description {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.8;
+  color: #555555;
+}
+
+.light .title {
+  color: #ffffff;
+}
+
+.light .description {
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.light .eyebrow {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.08);
+  color: #ff6565;
+}
