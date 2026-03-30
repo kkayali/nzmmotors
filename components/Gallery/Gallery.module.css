@@ -2,9 +2,22 @@
   position: relative;
   padding: 120px 0;
   background:
-    radial-gradient(circle at left top, rgba(255, 0, 0, 0.08), transparent 20%),
-    linear-gradient(180deg, #070707 0%, #0d0d0d 100%);
+    radial-gradient(circle at left top, rgba(255, 0, 0, 0.05), transparent 30%),
+    linear-gradient(180deg, #050505 0%, #0a0a0a 100%);
   overflow: hidden;
+  z-index: 1;
+}
+
+.bgGlow {
+  position: absolute;
+  top: 40%;
+  right: -10%;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(255, 30, 30, 0.04) 0%, transparent 60%);
+  filter: blur(40px);
+  pointer-events: none;
+  z-index: -1;
 }
 
 .container {
@@ -15,19 +28,20 @@
 .sliderShell {
   position: relative;
   overflow: hidden;
-  padding: 16px 0 10px;
+  padding: 24px 0 32px;
+  /* Kenarlardan yumuşak geçişli kaybolma efekti */
   mask-image: linear-gradient(
     to right,
     transparent 0%,
-    rgba(0, 0, 0, 1) 8%,
-    rgba(0, 0, 0, 1) 92%,
+    rgba(0, 0, 0, 1) 12%,
+    rgba(0, 0, 0, 1) 88%,
     transparent 100%
   );
   -webkit-mask-image: linear-gradient(
     to right,
     transparent 0%,
-    rgba(0, 0, 0, 1) 8%,
-    rgba(0, 0, 0, 1) 92%,
+    rgba(0, 0, 0, 1) 12%,
+    rgba(0, 0, 0, 1) 88%,
     transparent 100%
   );
 }
@@ -35,45 +49,53 @@
 .sliderTrack {
   display: flex;
   align-items: stretch;
-  gap: 22px;
+  gap: 28px;
   width: max-content;
-  animation: reelFlow 42s linear infinite;
+  animation: reelFlow 45s linear infinite;
+  will-change: transform; /* Performans optimizasyonu */
 }
 
+/* Üzerine gelince slider dursun ki rahat okunsun */
 .sliderShell:hover .sliderTrack {
   animation-play-state: paused;
 }
 
 .card {
-  width: clamp(220px, 20vw, 290px);
+  width: clamp(240px, 22vw, 300px);
   flex: 0 0 auto;
-  border-radius: 28px;
+  border-radius: 32px;
   overflow: hidden;
   background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.06),
-    rgba(255, 255, 255, 0.025)
+    145deg,
+    rgba(30, 30, 30, 0.6),
+    rgba(10, 10, 10, 0.8)
   );
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 20px 42px rgba(0, 0, 0, 0.24);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 20px 42px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
   transition:
-    transform 0.35s ease,
-    border-color 0.35s ease,
-    box-shadow 0.35s ease;
-}
-
-.card:hover {
-  transform: translateY(-10px) rotate(0deg) scale(1.02);
-  border-color: rgba(255, 80, 80, 0.24);
-  box-shadow: 0 26px 48px rgba(0, 0, 0, 0.32);
+    transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+    border-color 0.4s ease,
+    box-shadow 0.4s ease;
 }
 
 .cardTiltLeft {
-  transform: rotate(-1.2deg);
+  transform: rotate(-1.5deg) translateY(0);
 }
 
 .cardTiltRight {
-  transform: rotate(1.2deg);
+  transform: rotate(1.5deg) translateY(0);
+}
+
+.card:hover {
+  /* Hover'da kartı düzelt, biraz yukarı kaldır ve öne getir */
+  transform: translateY(-12px) rotate(0deg) scale(1.03) !important;
+  border-color: rgba(255, 60, 60, 0.3);
+  box-shadow: 
+    0 30px 60px rgba(0, 0, 0, 0.5),
+    0 0 20px rgba(255, 0, 0, 0.1);
+  z-index: 10;
 }
 
 .imageWrap {
@@ -81,45 +103,80 @@
   aspect-ratio: 9 / 16;
   width: 100%;
   overflow: hidden;
-  background: #0a0a0a;
+  background: #000;
 }
 
 .image {
   object-fit: cover;
-  transition: transform 0.6s ease, filter 0.6s ease;
-  filter: brightness(0.88) contrast(1.06) saturate(1.02);
+  transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1), filter 0.7s ease;
+  filter: brightness(0.85) contrast(1.1) saturate(1.05);
 }
 
 .card:hover .image {
-  transform: scale(1.06);
-  filter: brightness(0.95) contrast(1.08) saturate(1.06);
+  transform: scale(1.08);
+  filter: brightness(0.95) contrast(1.15) saturate(1.1);
 }
 
 .imageOverlay {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(to top, rgba(0, 0, 0, 0.62), rgba(0, 0, 0, 0.04) 38%, rgba(0, 0, 0, 0.18)),
-    linear-gradient(135deg, rgba(255, 0, 0, 0.08), transparent 34%);
+    linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, transparent 40%),
+    linear-gradient(135deg, rgba(255, 0, 0, 0.15), transparent 40%);
   pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Premium Instagram İkon Hover Efekti */
+.playIconWrap {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.playIcon {
+  color: #ffffff;
+  /* Instagram gradyanı */
+  fill: url(#instagram-gradient); /* Eğer SVG içinde gradyan yoksa saf beyaz da şık durur */
+}
+
+.card:hover .playIconWrap {
+  opacity: 1;
+  transform: scale(1);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
 }
 
 .content {
-  padding: 18px 18px 20px;
+  padding: 22px 20px 24px;
+  position: relative;
+  z-index: 2;
 }
 
 .content h3 {
   margin: 0 0 10px;
   color: #ffffff;
-  font-size: 22px;
+  font-size: 21px;
   line-height: 1.2;
+  font-weight: 800;
+  letter-spacing: -0.3px;
 }
 
 .content p {
   margin: 0;
-  color: rgba(255, 255, 255, 0.72);
+  color: rgba(255, 255, 255, 0.7);
   font-size: 14px;
-  line-height: 1.75;
+  line-height: 1.7;
 }
 
 @keyframes reelFlow {
@@ -127,45 +184,90 @@
     transform: translateX(0);
   }
   to {
-    transform: translateX(calc(-50% - 11px));
+    /* Gap değerinin yarısı (28px / 2 = 14px) kusursuz döngü için önemlidir */
+    transform: translateX(calc(-50% - 14px));
   }
 }
+
+/* --- Responsive & Mobil --- */
 
 @media (max-width: 1100px) {
   .card {
-    width: clamp(210px, 28vw, 270px);
+    width: clamp(220px, 26vw, 280px);
   }
 }
 
-@media (max-width: 700px) {
+@media (max-width: 768px) {
   .section {
-    padding: 88px 0;
+    padding: 80px 0;
+  }
+  
+  .sliderShell {
+    /* Mobilde maskelemeyi tamamen kapatmak yerine yumuşatıyoruz */
+    mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      rgba(0, 0, 0, 1) 6%,
+      rgba(0, 0, 0, 1) 94%,
+      transparent 100%
+    );
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      rgba(0, 0, 0, 1) 6%,
+      rgba(0, 0, 0, 1) 94%,
+      transparent 100%
+    );
+  }
+}
+
+@media (max-width: 580px) {
+  .section {
+    padding: 64px 0;
   }
 
   .container {
     width: calc(100% - 24px);
   }
 
-  .sliderShell {
-    mask-image: none;
-    -webkit-mask-image: none;
-  }
-
   .sliderTrack {
     gap: 16px;
-    animation-duration: 34s;
+    animation-duration: 38s; /* Mobilde biraz daha yavaş akabilir */
   }
 
   .card {
-    width: 72vw;
-    border-radius: 22px;
+    /* Ekranın tamamını kaplamaması için 60vw yapıyoruz, yanındaki kart görünsün */
+    width: 60vw; 
+    border-radius: 24px;
+  }
+
+  @keyframes reelFlow {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      /* Mobildeki gap 16px, yarısı 8px */
+      transform: translateX(calc(-50% - 8px));
+    }
   }
 
   .content {
-    padding: 16px 16px 18px;
+    padding: 18px 16px 20px;
   }
 
   .content h3 {
-    font-size: 20px;
+    font-size: 18px;
+    margin-bottom: 8px;
+  }
+
+  .content p {
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  
+  /* Dokunmatik cihazlarda Play ikonunu sürekli hafifçe göster */
+  .playIconWrap {
+    opacity: 0.6;
+    transform: scale(0.85);
   }
 }

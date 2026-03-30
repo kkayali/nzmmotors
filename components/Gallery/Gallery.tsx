@@ -1,4 +1,7 @@
+"use client";
+
 import Image from "next/image";
+import { FaInstagram } from "react-icons/fa";
 import SectionTitle from "@/components/SectionTitle/SectionTitle";
 import styles from "./Gallery.module.css";
 import { galleryItems } from "@/data/gallery";
@@ -8,6 +11,8 @@ const loopItems = [...galleryItems, ...galleryItems];
 export default function Gallery() {
   return (
     <section className={styles.section}>
+      <div className={styles.bgGlow} />
+
       <div className={styles.container}>
         <SectionTitle
           eyebrow="Galeri"
@@ -17,9 +22,6 @@ export default function Gallery() {
         />
 
         <div className={styles.sliderShell}>
-          <div className={styles.edgeFadeLeft} />
-          <div className={styles.edgeFadeRight} />
-
           <div className={styles.sliderTrack}>
             {loopItems.map((item, index) => (
               <article
@@ -33,10 +35,14 @@ export default function Gallery() {
                     src={item.image}
                     alt={item.title}
                     fill
-                    sizes="(max-width: 700px) 72vw, (max-width: 1100px) 34vw, 22vw"
+                    sizes="(max-width: 700px) 60vw, (max-width: 1100px) 34vw, 22vw"
                     className={styles.image}
                   />
-                  <div className={styles.imageOverlay} />
+                  <div className={styles.imageOverlay}>
+                    <div className={styles.playIconWrap}>
+                      <FaInstagram size={26} className={styles.playIcon} />
+                    </div>
+                  </div>
                 </div>
 
                 <div className={styles.content}>

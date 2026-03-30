@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -23,7 +25,7 @@ export default function Footer() {
 
       <div className={styles.container}>
         <div className={styles.brandCol}>
-          <div className={styles.logoWrap}>
+          <Link href="/" className={styles.logoWrap}>
             <Image
               src="/images/logo/nzm-logo.png"
               alt="NZM Motors"
@@ -32,7 +34,7 @@ export default function Footer() {
               className={styles.logo}
               priority={false}
             />
-          </div>
+          </Link>
 
           <p>
             Nazım Ateş liderliğinde mekanik, elektrik, kaporta, bakım, motor,
@@ -65,7 +67,7 @@ export default function Footer() {
             {quickLinks.map((item) => (
               <Link key={item.href} href={item.href} className={styles.menuLink}>
                 <span>{item.label}</span>
-                <ArrowUpRight size={15} />
+                <ArrowUpRight size={16} className={styles.linkIcon} />
               </Link>
             ))}
           </div>
@@ -91,7 +93,7 @@ export default function Footer() {
               <span className={`${styles.iconBox} ${styles.whatsappBox}`}>
                 <MessageCircle size={16} />
               </span>
-              <span>WhatsApp Üzerinden Ulaşın</span>
+              <span>WhatsApp'tan Ulaşın</span>
             </a>
 
             <a
@@ -101,9 +103,9 @@ export default function Footer() {
               className={styles.infoItem}
             >
               <span className={`${styles.iconBox} ${styles.instagramBox}`}>
-                <FaInstagram size={15} />
+                <FaInstagram size={16} />
               </span>
-              <span>Instagram</span>
+              <span>Instagram'da Takip Et</span>
             </a>
           </div>
         </div>
@@ -126,14 +128,21 @@ export default function Footer() {
               className={styles.mapLink}
             >
               <span>Google Maps’te Aç</span>
-              <ArrowUpRight size={15} />
+              <ArrowUpRight size={16} className={styles.linkIcon} />
             </a>
           </div>
         </div>
       </div>
 
       <div className={styles.bottom}>
-        <p>© 2026 NZM Motors. Tüm hakları saklıdır.</p>
+        <div className={styles.bottomContent}>
+          <p>© {new Date().getFullYear()} NZM Motors. Tüm hakları saklıdır.</p>
+          <div className={styles.legalLinks}>
+            <Link href="#">Gizlilik Politikası</Link>
+            <span className={styles.dot}>•</span>
+            <Link href="#">Kullanım Koşulları</Link>
+          </div>
+        </div>
       </div>
     </footer>
   );
