@@ -112,6 +112,8 @@
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   overflow: hidden;
   z-index: 1;
+  box-sizing: border-box;
+  max-width: 100%;
 }
 
 .btn::before {
@@ -241,12 +243,14 @@
   }
 
   .btn {
-    min-height: 54px;
-    font-size: 15px;
-    justify-content: center; /* İkon ve metin ortalansın */
-    padding: 0 20px;
-    border-radius: 16px;
-  }
+  min-height: 54px;
+  font-size: 15px;
+  justify-content: center;
+  padding: 0 16px;
+  border-radius: 16px;
+  width: 100%;
+  box-sizing: border-box;
+}
 
   .left h2 {
     font-size: 28px;
