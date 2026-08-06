@@ -1,0 +1,59 @@
+.bar {
+  display: none;
+}
+
+@media (max-width: 760px) {
+  .bar {
+    position: fixed;
+    right: 10px;
+    bottom: max(10px, env(safe-area-inset-bottom));
+    left: 10px;
+    z-index: 1500;
+    min-height: 62px;
+    display: grid;
+    grid-template-columns: 0.86fr 1.28fr 0.96fr;
+    gap: 6px;
+    padding: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 20px;
+    background: rgba(10, 10, 10, 0.92);
+    box-shadow: 0 18px 46px rgba(0, 0, 0, 0.42);
+    backdrop-filter: blur(18px);
+  }
+
+  .bar a {
+    min-width: 0;
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    border-radius: 14px;
+    color: var(--color-text-soft);
+    font-size: 11px;
+    font-weight: 800;
+    text-decoration: none;
+  }
+
+  .bar a svg {
+    flex: 0 0 auto;
+  }
+
+  .bar .primary {
+    color: #ffffff;
+    background: var(--color-whatsapp);
+  }
+}
+
+@media (max-width: 380px) {
+  .bar {
+    right: 7px;
+    left: 7px;
+    grid-template-columns: 0.8fr 1.22fr 0.98fr;
+  }
+
+  .bar a {
+    gap: 5px;
+    font-size: 10px;
+  }
+}

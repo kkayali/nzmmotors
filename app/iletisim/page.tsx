@@ -1,89 +1,124 @@
+import type { Metadata } from "next";
 import {
-  PhoneCall,
-  MessageCircle,
-  MapPin,
   ArrowUpRight,
+  Clock3,
+  MapPin,
+  MessageCircle,
+  Navigation,
+  PhoneCall,
+  Star,
 } from "lucide-react";
 import { FaInstagram } from "react-icons/fa";
-import styles from "./page.module.css";
-import { siteConfig } from "@/data/site";
 import MapSection from "@/components/MapSection/MapSection";
+import { getWhatsAppUrl, siteConfig } from "@/data/site";
+import styles from "./page.module.css";
+
+export const metadata: Metadata = {
+  title: "İletişim",
+  description:
+    "NZM Motors telefon, WhatsApp, Instagram, Google İşletme ve yol tarifi bilgilerine ulaşın; servis ve randevu bilgisi alın.",
+  alternates: { canonical: "/iletisim" },
+};
+
+const contactItems = [
+  {
+    icon: PhoneCall,
+    label: "Telefon",
+    value: siteConfig.phoneDisplay,
+    href: `tel:${siteConfig.phone}`,
+  },
+  {
+    icon: MessageCircle,
+    label: "WhatsApp",
+    value: "Mesaj gönderin",
+    href: getWhatsAppUrl(),
+    external: true,
+  },
+  {
+    icon: FaInstagram,
+    label: "Instagram",
+    value: "@nzm_motors",
+    href: siteConfig.instagram,
+    external: true,
+  },
+  {
+    icon: Navigation,
+    label: "Yol tarifi",
+    value: "Google Maps'te açın",
+    href: siteConfig.maps,
+    external: true,
+  },
+];
 
 export default function Iletisim() {
   return (
-    <main className={styles.contactPage}>
-      <section className={styles.hero}>
-        <div className={styles.heroOverlay} />
-        <div className={styles.heroGlow} />
-
+    <main id="main-content" className={styles.page}>
+      <section className={styles.hero} aria-labelledby="contact-title">
+        <div className={styles.pattern} aria-hidden="true" />
         <div className={styles.container}>
-          <span className={styles.badge}>İletişim</span>
+          <div className={styles.heroGrid}>
+            <div className={styles.heroCopy}>
+              <span className={styles.eyebrow}>İletişim</span>
+              <h1 id="contact-title">Aracınızla ilgili bilgi almak artık tek dokunuş uzakta.</h1>
+              <p>
+                Aracınızın marka, model ve yaşadığınız sorunu kısaca iletin.
+                Kontrol, servis süreci ve randevu hakkında size uygun iletişim
+                kanalından bilgi alın.
+              </p>
+            </div>
 
-          <h1>NZM Motors ile Hızlıca İletişime Geçin</h1>
+            <div className={styles.primaryCard}>
+              <span className={styles.primaryIcon} aria-hidden="true">
+                <MessageCircle size={25} strokeWidth={1.8} />
+              </span>
+              <div>
+                <small>En hızlı iletişim</small>
+                <h2>WhatsApp’tan yazın</h2>
+                <p>Marka, model ve şikâyetinizi yazarak servis bilgisi alın.</p>
+              </div>
+              <a href={getWhatsAppUrl()} target="_blank" rel="noreferrer">
+                Mesaj Gönder
+                <ArrowUpRight size={17} />
+              </a>
+            </div>
+          </div>
 
-          <p>
-            Telefon, WhatsApp, Instagram ve konum bilgileri üzerinden bize kolayca
-            ulaşabilir, servis süreci hakkında hızlı şekilde bilgi alabilirsiniz.
-          </p>
+          <div className={styles.contactGrid}>
+            {contactItems.map((item) => {
+              const Icon = item.icon;
+              return (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  target={item.external ? "_blank" : undefined}
+                  rel={item.external ? "noreferrer" : undefined}
+                  className={styles.contactCard}
+                >
+                  <span className={styles.contactIcon} aria-hidden="true">
+                    <Icon size={19} strokeWidth={1.8} />
+                  </span>
+                  <span className={styles.contactText}>
+                    <small>{item.label}</small>
+                    <strong>{item.value}</strong>
+                  </span>
+                  <ArrowUpRight size={16} className={styles.arrow} />
+                </a>
+              );
+            })}
+          </div>
 
-          <div className={styles.cards}>
-            <a href={`tel:${siteConfig.phone}`} className={styles.card}>
-              <div className={styles.cardIcon}>
-                <PhoneCall size={18} />
-              </div>
-              <div className={styles.cardContent}>
-                <strong>Telefon</strong>
-                <span>{siteConfig.phoneDisplay}</span>
-              </div>
-              <ArrowUpRight size={16} className={styles.arrow} />
-            </a>
-
-            <a
-              href={`https://wa.me/${siteConfig.whatsapp}`}
-              target="_blank"
-              rel="noreferrer"
-              className={styles.card}
-            >
-              <div className={`${styles.cardIcon} ${styles.whatsappIcon}`}>
-                <MessageCircle size={18} />
-              </div>
-              <div className={styles.cardContent}>
-                <strong>WhatsApp</strong>
-                <span>Mesaj Gönder</span>
-              </div>
-              <ArrowUpRight size={16} className={styles.arrow} />
-            </a>
-
-            <a
-              href={siteConfig.instagram}
-              target="_blank"
-              rel="noreferrer"
-              className={styles.card}
-            >
-              <div className={`${styles.cardIcon} ${styles.instagramIcon}`}>
-                <FaInstagram size={16} />
-              </div>
-              <div className={styles.cardContent}>
-                <strong>Instagram</strong>
-                <span>nzm_motors</span>
-              </div>
-              <ArrowUpRight size={16} className={styles.arrow} />
-            </a>
-
-            <a
-              href={siteConfig.maps}
-              target="_blank"
-              rel="noreferrer"
-              className={styles.card}
-            >
-              <div className={styles.cardIcon}>
-                <MapPin size={18} />
-              </div>
-              <div className={styles.cardContent}>
-                <strong>Konum</strong>
-                <span>Google Maps’te Aç</span>
-              </div>
-              <ArrowUpRight size={16} className={styles.arrow} />
+          <div className={styles.quickInfo}>
+            <div>
+              <MapPin size={17} />
+              <span>{siteConfig.shortAddress}</span>
+            </div>
+            <div>
+              <Clock3 size={17} />
+              <span>{siteConfig.workingHours}</span>
+            </div>
+            <a href={siteConfig.googleBusiness} target="_blank" rel="noreferrer">
+              <Star size={17} />
+              <span>Google İşletme Profili ve Yorumlar</span>
             </a>
           </div>
         </div>

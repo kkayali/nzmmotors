@@ -1,0 +1,103 @@
+.banner {
+  position: fixed;
+  left: 20px;
+  bottom: 20px;
+  z-index: 2500;
+  width: min(520px, calc(100vw - 40px));
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 14px;
+  padding: 20px;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-lg);
+  color: var(--color-text);
+  background: rgba(15, 15, 15, 0.96);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(18px);
+}
+
+.close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 10px;
+  color: #9a9a9a;
+  background: transparent;
+  cursor: pointer;
+}
+
+.icon {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 13px;
+  color: #ff5e64;
+  background: rgba(229, 27, 35, 0.1);
+}
+
+.copy {
+  padding-right: 28px;
+}
+
+.copy strong {
+  display: block;
+  margin-bottom: 6px;
+  color: #ffffff;
+  font-size: 14px;
+}
+
+.copy p {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 12px;
+  line-height: 1.65;
+}
+
+.copy a {
+  color: #ffffff;
+}
+
+.actions {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: flex-end;
+  gap: 9px;
+}
+
+.actions button {
+  min-height: 42px;
+  padding: 0 14px;
+  border: 1px solid var(--color-border);
+  border-radius: 11px;
+  color: #ffffff;
+  background: #1a1a1a;
+  font-size: 11px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.actions button:last-child {
+  border-color: transparent;
+  background: var(--color-brand);
+}
+
+@media (max-width: 760px) {
+  .banner {
+    left: 12px;
+    right: auto;
+    bottom: calc(86px + env(safe-area-inset-bottom));
+    width: calc(100vw - 24px);
+    padding: 17px;
+  }
+
+  .actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+}

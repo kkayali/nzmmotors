@@ -1,264 +1,165 @@
 .section {
-  position: relative;
-  background: #050505;
-  padding: 120px 0;
-  overflow: hidden;
-  z-index: 1;
-}
-
-.bgGlow {
-  position: absolute;
-  top: 50%;
-  left: 20%;
-  width: 800px;
-  height: 800px;
-  background: radial-gradient(circle, rgba(255, 0, 0, 0.04) 0%, transparent 60%);
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-  z-index: -1;
+  padding: clamp(64px, 7vw, 92px) 0;
+  background: var(--color-bg-soft, #0b0b0b);
+  border-top: 1px solid var(--color-border, rgba(255, 255, 255, 0.09));
 }
 
 .container {
   position: relative;
-  width: min(1280px, calc(100% - 40px));
-  margin: 0 auto;
-  padding: 56px 64px;
-  border-radius: 32px;
-  background: linear-gradient(145deg, rgba(20, 20, 20, 0.85), rgba(8, 8, 8, 0.95));
-  backdrop-filter: blur(24px);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  box-shadow:
-    0 40px 80px rgba(0, 0, 0, 0.5),
-    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  width: min(var(--container, 1280px), calc(100% - (var(--gutter, clamp(20px, 4vw, 40px)) * 2)));
+  margin-inline: auto;
   display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 64px;
+  grid-template-columns: minmax(0, 1fr) minmax(330px, 0.62fr);
+  gap: clamp(40px, 7vw, 90px);
   align-items: center;
+  padding: clamp(34px, 5vw, 62px);
   overflow: hidden;
+  border: 1px solid rgba(229, 27, 35, 0.42);
+  border-radius: var(--radius-xl, 32px);
+  background:
+    linear-gradient(115deg, rgba(229, 27, 35, 0.16), transparent 48%),
+    var(--color-surface, #111111);
 }
 
-/* Kutu içi aydınlatma detayı */
-.container::before {
-  content: "";
+.container::after {
+  content: "NZM";
   position: absolute;
-  top: 0;
-  right: 0;
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.03) 0%, transparent 70%);
+  right: -18px;
+  bottom: -46px;
+  color: rgba(255, 255, 255, 0.025);
+  font-family: var(--font-heading, "Arial Narrow"), sans-serif;
+  font-size: clamp(150px, 22vw, 300px);
+  font-weight: 800;
+  line-height: 0.7;
   pointer-events: none;
-  z-index: 0;
 }
 
-.left {
+.copy,
+.actions {
   position: relative;
   z-index: 2;
 }
 
-.badge {
-  display: inline-flex;
-  align-items: center;
-  min-height: 32px;
-  padding: 0 16px;
-  border-radius: 999px;
-  background: rgba(255, 40, 40, 0.08);
-  border: 1px solid rgba(255, 40, 40, 0.15);
-  color: #ff5555;
-  font-size: 13px;
+.eyebrow {
+  display: inline-block;
+  margin-bottom: 16px;
+  color: #ff555b;
+  font-size: 11px;
   font-weight: 800;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.13em;
   text-transform: uppercase;
-  margin-bottom: 20px;
 }
 
-.left h2 {
+.copy h2 {
+  max-width: 720px;
   margin: 0 0 16px;
   color: #ffffff;
-  font-size: clamp(34px, 4.5vw, 52px);
-  line-height: 1.1;
-  letter-spacing: -1px;
-  font-weight: 800;
+  font-size: clamp(42px, 5vw, 66px);
+  line-height: 0.96;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
 }
 
-.left p {
+.copy p {
+  max-width: 650px;
   margin: 0;
-  color: rgba(255, 255, 255, 0.7);
-  line-height: 1.8;
-  font-size: 17px;
-  max-width: 640px;
+  color: var(--color-text-muted, #a9a9a9);
+  font-size: 15px;
+  line-height: 1.75;
 }
 
-.right {
-  position: relative;
-  z-index: 2;
+.actions {
   display: grid;
-  grid-template-columns: repeat(2, minmax(220px, 1fr));
-  gap: 16px;
+  gap: 10px;
 }
 
-/* Genel Buton Stili (Ortak Özellikler) */
-.btn {
-  position: relative;
+.primaryAction,
+.secondaryAction {
   display: inline-flex;
+  min-height: 54px;
   align-items: center;
   justify-content: center;
-  gap: 12px;
-  min-height: 58px;
-  padding: 0 24px;
-  border-radius: 18px;
-  text-decoration: none;
+  gap: 10px;
+  padding: 0 20px;
+  border-radius: var(--radius-md, 16px);
+  font-size: 14px;
   font-weight: 800;
-  font-size: 16px;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  overflow: hidden;
-  z-index: 1;
-  box-sizing: border-box;
-  max-width: 100%;
+  text-decoration: none;
+  transition:
+    transform var(--transition-fast, 180ms ease),
+    background var(--transition-fast, 180ms ease),
+    border-color var(--transition-fast, 180ms ease);
 }
 
-.btn::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  z-index: -1;
-}
-
-.btn:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.4);
-}
-
-.btn:hover::before {
-  opacity: 1;
-}
-
-/* Özel Buton Stilleri */
-.primaryBtn {
-  background: linear-gradient(135deg, #cc0000, #800000);
+.primaryAction {
   color: #ffffff;
-  box-shadow: 0 8px 24px rgba(204, 0, 0, 0.2);
-  border: 1px solid rgba(255, 0, 0, 0.1);
-}
-.primaryBtn::before {
-  background: linear-gradient(135deg, #ff1a1a, #a60000);
+  background: var(--color-brand, #e51b23);
 }
 
-.whatsappBtn {
-  background: linear-gradient(135deg, #128c7e, #075e54);
-  color: #ffffff;
-  box-shadow: 0 8px 24px rgba(18, 140, 126, 0.2);
-  border: 1px solid rgba(37, 211, 102, 0.2);
-}
-.whatsappBtn::before {
-  background: linear-gradient(135deg, #25d366, #128c7e);
+.secondaryAction {
+  color: var(--color-text, #f7f7f7);
+  border: 1px solid var(--color-border-strong, rgba(255, 255, 255, 0.16));
+  background: rgba(255, 255, 255, 0.035);
 }
 
-.instagramBtn {
-  background: linear-gradient(135deg, #c13584, #833ab4);
-  color: #ffffff;
-  box-shadow: 0 8px 24px rgba(193, 53, 132, 0.2);
-  border: 1px solid rgba(253, 29, 29, 0.2);
-}
-.instagramBtn::before {
-  background: linear-gradient(135deg, #fd1d1d, #fcb045);
+.primaryAction:hover,
+.secondaryAction:hover {
+  transform: translateY(-2px);
 }
 
-.mapBtn {
-  background: rgba(255, 255, 255, 0.04);
-  color: #ffffff;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(8px);
-}
-.mapBtn:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.2);
+.primaryAction:hover {
+  background: var(--color-brand-strong, #bd0f15);
 }
 
-/* --- Responsive Tasarım (Mobil ve Tablet) --- */
-
-@media (max-width: 1100px) {
-  .container {
-    grid-template-columns: 1fr;
-    padding: 56px 48px;
-    gap: 48px;
-  }
-
-  .left {
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .left p {
-    max-width: 100%;
-  }
+.secondaryAction:hover {
+  border-color: rgba(255, 255, 255, 0.28);
+  background: rgba(255, 255, 255, 0.06);
 }
 
-@media (max-width: 768px) {
-  .section {
-    padding: 80px 0;
-  }
-
-  .container {
-    width: calc(100% - 32px);
-    padding: 40px 32px;
-    border-radius: 28px;
-  }
-
-  .right {
-    /* Tablet ve büyük telefonlarda 2'li ızgara kalsın, iyi durur */
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .left h2 {
-    font-size: 32px;
-    margin-bottom: 12px;
-  }
-
-  .left p {
-    font-size: 16px;
-    line-height: 1.7;
-  }
-}
-
-@media (max-width: 580px) {
-  .section {
-    padding: 64px 0;
-  }
-
-  .container {
-    width: calc(100% - 24px);
-    padding: 36px 20px;
-    border-radius: 24px;
-    gap: 36px;
-  }
-
-  .right {
-    /* Küçük ekranlarda butonları alt alta al */
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
-
-  .btn {
-  min-height: 54px;
-  font-size: 15px;
+.smallLinks {
+  display: flex;
+  align-items: center;
   justify-content: center;
-  padding: 0 16px;
-  border-radius: 16px;
-  width: 100%;
-  box-sizing: border-box;
+  gap: 14px;
+  padding-top: 8px;
+  color: #777777;
 }
 
-  .left h2 {
-    font-size: 28px;
+.smallLinks a {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--color-text-muted, #a9a9a9);
+  font-size: 11px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.smallLinks > svg {
+  color: #555555;
+}
+
+@media (max-width: 900px) {
+  .container {
+    grid-template-columns: 1fr;
   }
 
-  .badge {
-    margin-bottom: 16px;
-    font-size: 12px;
-    min-height: 30px;
+  .actions {
+    max-width: 520px;
+  }
+}
+
+@media (max-width: 600px) {
+  .container {
+    padding: 30px 20px;
+    border-radius: var(--radius-lg, 24px);
+  }
+
+  .copy h2 {
+    font-size: clamp(38px, 11vw, 50px);
+  }
+
+  .smallLinks {
+    flex-wrap: wrap;
   }
 }

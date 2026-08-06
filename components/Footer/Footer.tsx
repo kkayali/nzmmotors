@@ -1,19 +1,16 @@
-"use client";
-
-import Link from "next/link";
 import Image from "next/image";
-import {
-  PhoneCall,
-  MessageCircle,
-  MapPin,
-  ArrowUpRight,
-} from "lucide-react";
+import Link from "next/link";
+import { ArrowUpRight, Clock3, MapPin, MessageCircle, PhoneCall, Star } from "lucide-react";
 import { FaInstagram } from "react-icons/fa";
+import { getWhatsAppUrl, siteConfig } from "@/data/site";
 import styles from "./Footer.module.css";
-import { siteConfig } from "@/data/site";
 
-const quickLinks = [
+const navigation = [
   { href: "/", label: "Ana Sayfa" },
+  { href: "/hizmetler", label: "Hizmetler" },
+  { href: "/#calismalar", label: "Çalışmalarımız" },
+  { href: "/#yorumlar", label: "Müşteri Yorumları" },
+  { href: "/#sik-sorulanlar", label: "Sık Sorulanlar" },
   { href: "/hakkimizda", label: "Hakkımızda" },
   { href: "/iletisim", label: "İletişim" },
 ];
@@ -21,127 +18,84 @@ const quickLinks = [
 export default function Footer() {
   return (
     <footer className={styles.footer}>
-      <div className={styles.topGlow} />
-
       <div className={styles.container}>
-        <div className={styles.brandCol}>
-          <Link href="/" className={styles.logoWrap}>
+        <div className={styles.brandColumn}>
+          <Link href="/" className={styles.logoLink} aria-label="NZM Motors ana sayfa">
             <Image
               src="/images/logo/nzm-logo.png"
               alt="NZM Motors"
-              width={260}
-              height={110}
+              width={1536}
+              height={1024}
               className={styles.logo}
-              priority={false}
             />
           </Link>
-
           <p>
-            Nazım Ateş liderliğinde mekanik, elektrik, kaporta, bakım, motor,
-            şanzıman ve arıza tespit alanlarında güçlü işçilik ve güvenilir
-            servis anlayışı sunuyoruz.
+            Nazım Ateş liderliğinde mekanik, motor, şanzıman, elektrik, kaporta ve bakım işlemlerinde güvenilir servis yaklaşımı.
           </p>
-
-          <div className={styles.brandActions}>
-            <a href={`tel:${siteConfig.phone}`} className={styles.primaryAction}>
-              <PhoneCall size={17} />
-              <span>{siteConfig.phoneDisplay}</span>
-            </a>
-
-            <a
-              href={`https://wa.me/${siteConfig.whatsapp}`}
-              target="_blank"
-              rel="noreferrer"
-              className={styles.secondaryAction}
-            >
-              <MessageCircle size={17} />
-              <span>WhatsApp</span>
-            </a>
-          </div>
+          <a href={getWhatsAppUrl()} target="_blank" rel="noreferrer" className={styles.whatsappLink}>
+            <MessageCircle size={17} /> WhatsApp’tan Ulaşın
+          </a>
         </div>
 
-        <div className={styles.col}>
-          <h4>Hızlı Menü</h4>
-
-          <div className={styles.links}>
-            {quickLinks.map((item) => (
-              <Link key={item.href} href={item.href} className={styles.menuLink}>
-                <span>{item.label}</span>
-                <ArrowUpRight size={16} className={styles.linkIcon} />
+        <div className={styles.column}>
+          <h2>Sayfalar</h2>
+          <nav className={styles.linkList} aria-label="Alt menü">
+            {navigation.map((item) => (
+              <Link key={item.href} href={item.href}>
+                {item.label}
               </Link>
             ))}
-          </div>
+          </nav>
         </div>
 
-        <div className={styles.col}>
-          <h4>İletişim</h4>
-
-          <div className={styles.infoList}>
-            <a href={`tel:${siteConfig.phone}`} className={styles.infoItem}>
-              <span className={styles.iconBox}>
-                <PhoneCall size={16} />
-              </span>
+        <div className={styles.column}>
+          <h2>İletişim</h2>
+          <div className={styles.contactList}>
+            <a href={`tel:${siteConfig.phone}`}>
+              <PhoneCall size={16} />
               <span>{siteConfig.phoneDisplay}</span>
             </a>
-
-            <a
-              href={`https://wa.me/${siteConfig.whatsapp}`}
-              target="_blank"
-              rel="noreferrer"
-              className={styles.infoItem}
-            >
-              <span className={`${styles.iconBox} ${styles.whatsappBox}`}>
-                <MessageCircle size={16} />
-              </span>
-              <span>WhatsApp'tan Ulaşın</span>
+            <a href={siteConfig.maps} target="_blank" rel="noreferrer">
+              <MapPin size={16} />
+              <span>{siteConfig.shortAddress}</span>
             </a>
-
-            <a
-              href={siteConfig.instagram}
-              target="_blank"
-              rel="noreferrer"
-              className={styles.infoItem}
-            >
-              <span className={`${styles.iconBox} ${styles.instagramBox}`}>
-                <FaInstagram size={16} />
-              </span>
-              <span>Instagram'da Takip Et</span>
-            </a>
+            <div>
+              <Clock3 size={16} />
+              <span>{siteConfig.workingHours}</span>
+            </div>
           </div>
         </div>
 
-        <div className={styles.col}>
-          <h4>Adres</h4>
-
-          <div className={styles.addressCard}>
-            <div className={styles.addressTop}>
-              <span className={styles.iconBox}>
-                <MapPin size={16} />
-              </span>
-              <span>{siteConfig.address}</span>
-            </div>
-
-            <a
-              href={siteConfig.maps}
-              target="_blank"
-              rel="noreferrer"
-              className={styles.mapLink}
-            >
-              <span>Google Maps’te Aç</span>
-              <ArrowUpRight size={16} className={styles.linkIcon} />
+        <div className={styles.column}>
+          <h2>Sosyal ve Yorumlar</h2>
+          <div className={styles.socialList}>
+            <a href={siteConfig.instagram} target="_blank" rel="noreferrer" className={styles.socialLink}>
+              <FaInstagram size={17} />
+              <span>Instagram’da Takip Edin</span>
+              <ArrowUpRight size={15} />
+            </a>
+            <a href={siteConfig.googleBusiness} target="_blank" rel="noreferrer" className={styles.socialLink}>
+              <Star size={17} />
+              <span>Google Yorumlarını Gör</span>
+              <ArrowUpRight size={15} />
             </a>
           </div>
+          <a href={siteConfig.maps} target="_blank" rel="noreferrer" className={styles.mapLink}>
+            Google Maps’te Yol Tarifi
+            <ArrowUpRight size={15} />
+          </a>
         </div>
       </div>
 
-      <div className={styles.bottom}>
-        <div className={styles.bottomContent}>
+      <div className={styles.bottomBar}>
+        <div className={styles.bottomInner}>
           <p>© {new Date().getFullYear()} NZM Motors. Tüm hakları saklıdır.</p>
-          <div className={styles.legalLinks}>
-            <Link href="#">Gizlilik Politikası</Link>
-            <span className={styles.dot}>•</span>
-            <Link href="#">Kullanım Koşulları</Link>
-          </div>
+          <nav className={styles.legalLinks} aria-label="Yasal bağlantılar">
+            <Link href="/gizlilik-politikasi">Gizlilik</Link>
+            <Link href="/kvkk">KVKK</Link>
+            <Link href="/cerez-politikasi">Çerezler</Link>
+          </nav>
+          <span>İstanbul</span>
         </div>
       </div>
     </footer>

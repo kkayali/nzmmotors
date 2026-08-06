@@ -1,142 +1,172 @@
 .section {
-  padding: 100px 0 120px;
-  background:
-    radial-gradient(circle at left top, rgba(255, 0, 0, 0.08), transparent 18%),
-    linear-gradient(180deg, #0a0a0a 0%, #050505 100%);
-  color: #ffffff;
+  padding-block: var(--section-space);
+  color: var(--color-text);
+  background: var(--color-bg-soft);
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
 }
 
 .container {
-  width: min(1280px, calc(100% - 40px));
-  margin: 0 auto;
+  width: min(var(--container), calc(100% - (var(--gutter) * 2)));
+  margin-inline: auto;
   display: grid;
-  grid-template-columns: 0.9fr 1.1fr;
-  gap: 26px;
-  align-items: stretch;
+  grid-template-columns: minmax(360px, 0.78fr) minmax(0, 1.22fr);
+  gap: clamp(34px, 6vw, 82px);
+  align-items: center;
 }
 
-.badge {
+.info {
+  max-width: 590px;
+}
+
+.eyebrow {
   display: inline-flex;
-  min-height: 38px;
   align-items: center;
-  padding: 0 14px;
+  min-height: 32px;
+  padding: 0 13px;
+  border: 1px solid var(--color-border);
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.05);
-  color: #ff6565;
-  font-size: 13px;
+  color: #ff6066;
+  background: rgba(255, 255, 255, 0.035);
+  font-size: 12px;
   font-weight: 800;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  margin-bottom: 16px;
 }
 
 .info h2 {
-  margin: 0 0 14px;
-  font-size: clamp(36px, 5vw, 64px);
-  line-height: 1;
-  letter-spacing: -1.3px;
+  margin: 18px 0;
+  font-size: clamp(46px, 5.4vw, 74px);
+  line-height: 0.93;
+  letter-spacing: -0.025em;
+  text-transform: uppercase;
 }
 
-.info p {
-  margin: 0 0 24px;
-  color: rgba(255, 255, 255, 0.76);
-  line-height: 1.9;
-  font-size: 16px;
-  max-width: 620px;
-}
-
-.addressCard {
-  padding: 22px;
-  border-radius: 24px;
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.06),
-    rgba(255, 255, 255, 0.03)
-  );
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.addressTop {
-  display: flex;
-  align-items: flex-start;
-  gap: 14px;
-  margin-bottom: 20px;
-}
-
-.iconBox {
-  width: 42px;
-  height: 42px;
-  border-radius: 13px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  color: #ff5e5e;
-  background: rgba(255, 255, 255, 0.05);
-  flex-shrink: 0;
-}
-
-.addressTop strong {
-  display: block;
-  margin-bottom: 8px;
-  font-size: 16px;
-  color: #ffffff;
-}
-
-.addressTop span:last-child {
-  color: rgba(255, 255, 255, 0.76);
+.description {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 15px;
   line-height: 1.85;
+}
+
+.infoCards {
+  display: grid;
+  gap: 10px;
+  margin-top: 28px;
+}
+
+.addressCard,
+.hoursCard {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 15px;
+  padding: 20px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+}
+
+.addressIcon,
+.hoursCard > svg {
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  padding: 12px;
+  border-radius: 14px;
+  color: #ff5e64;
+  background: rgba(229, 27, 35, 0.1);
+}
+
+.addressCard small,
+.hoursCard small {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--color-text-muted);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.addressCard strong,
+.hoursCard strong {
+  display: block;
+  color: #ffffff;
+  font-family: var(--font-heading), sans-serif;
+  font-size: 22px;
+  line-height: 1.05;
+  text-transform: uppercase;
+}
+
+.addressCard p,
+.hoursCard p {
+  margin: 8px 0 0;
+  color: var(--color-text-muted);
+  font-size: 12px;
+  line-height: 1.65;
 }
 
 .actions {
   display: flex;
-  gap: 12px;
   flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 18px;
 }
 
-.actions a {
+.primaryAction,
+.secondaryAction {
+  min-height: 48px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  min-height: 50px;
-  padding: 0 18px;
-  border-radius: 14px;
-  text-decoration: none;
+  gap: 8px;
+  padding: 0 16px;
+  border-radius: 13px;
+  font-size: 12px;
   font-weight: 800;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  text-decoration: none;
+  transition: background var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast);
 }
 
-.actions a:first-child {
+.primaryAction {
   color: #ffffff;
-  background: linear-gradient(135deg, #ff1d1d, #b50000);
-  box-shadow: 0 14px 24px rgba(255, 0, 0, 0.16);
+  background: var(--color-brand);
 }
 
-.actions a:last-child {
+.primaryAction:hover {
+  background: var(--color-brand-strong);
+  transform: translateY(-1px);
+}
+
+.secondaryAction {
+  border: 1px solid var(--color-border);
+  color: var(--color-text-soft);
+  background: var(--color-surface);
+}
+
+.secondaryAction:hover {
+  border-color: var(--color-border-strong);
   color: #ffffff;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.actions a:hover {
-  transform: translateY(-2px);
+  transform: translateY(-1px);
 }
 
 .mapWrap {
   position: relative;
-  min-height: 620px;
-  border-radius: 30px;
+  min-height: 590px;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: #0b0b0b;
-  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.18);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-soft);
 }
 
 .mapFrame {
   width: 100%;
   height: 100%;
-  min-height: 620px;
+  min-height: 590px;
   border: 0;
-  filter: grayscale(1) contrast(1.08) brightness(0.88);
+  filter: grayscale(0.88) contrast(1.04) brightness(0.86);
 }
 
 .mapOverlay {
@@ -144,13 +174,36 @@
   inset: 0;
   pointer-events: none;
   background:
-    linear-gradient(135deg, rgba(255, 0, 0, 0.06), transparent 26%),
-    linear-gradient(to top, rgba(0, 0, 0, 0.08), transparent 26%);
+    linear-gradient(135deg, rgba(229, 27, 35, 0.08), transparent 30%),
+    linear-gradient(to top, rgba(0, 0, 0, 0.22), transparent 32%);
 }
 
-@media (max-width: 1100px) {
+.mapBadge {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 0 13px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 12px;
+  color: #ffffff;
+  background: rgba(8, 8, 8, 0.82);
+  backdrop-filter: blur(12px);
+  font-size: 11px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+@media (max-width: 1000px) {
   .container {
     grid-template-columns: 1fr;
+  }
+
+  .info {
+    max-width: 760px;
   }
 
   .mapWrap,
@@ -159,31 +212,28 @@
   }
 }
 
-@media (max-width: 760px) {
-  .section {
-    padding: 84px 0 92px;
+@media (max-width: 620px) {
+  .info h2 {
+    font-size: 44px;
   }
 
-  .container {
-    width: calc(100% - 24px);
+  .actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
   }
 
-  .info p {
-    font-size: 15px;
-    line-height: 1.82;
+  .primaryAction {
+    grid-column: 1 / -1;
   }
 
   .mapWrap,
   .mapFrame {
     min-height: 360px;
-    border-radius: 22px;
+    border-radius: var(--radius-lg);
   }
 
-  .actions {
-    flex-direction: column;
-  }
-
-  .actions a {
-    width: 100%;
+  .mapBadge {
+    top: 12px;
+    right: 12px;
   }
 }

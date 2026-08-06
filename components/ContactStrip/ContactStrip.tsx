@@ -1,66 +1,48 @@
-"use client";
-
-import {
-  PhoneCall,
-  MessageCircle,
-  MapPin,
-} from "lucide-react";
+import { ArrowUpRight, MapPin, MessageCircle, PhoneCall, Star } from "lucide-react";
 import { FaInstagram } from "react-icons/fa";
+import { getWhatsAppUrl, siteConfig } from "@/data/site";
 import styles from "./ContactStrip.module.css";
-import { siteConfig } from "@/data/site";
 
 export default function ContactStrip() {
   return (
-    <section className={styles.section}>
-      {/* Arka plan premium aydınlatma efekti */}
-      <div className={styles.bgGlow} />
-
+    <section className={styles.section} aria-labelledby="contact-strip-title">
       <div className={styles.container}>
-        <div className={styles.left}>
-          <span className={styles.badge}>Hızlı İletişim</span>
-          <h2>Aracınız İçin Hızlı Bilgi ve Randevu Alın</h2>
+        <div className={styles.copy}>
+          <span className={styles.eyebrow}>Hızlı İletişim</span>
+          <h2 id="contact-strip-title">Aracınızla İlgili Bilgi Alın, Randevunuzu Planlayın</h2>
           <p>
-            NZM Motors ile telefon veya WhatsApp üzerinden hızlı şekilde iletişime
-            geçebilir, konum bilgisine ulaşabilir ve servisimiz hakkında detaylı
-            bilgi alabilirsiniz.
+            Sorunu kısaca anlatın. Araç kontrolü ve uygun servis süreci için sizinle iletişime geçelim. Çalışma saatleri: {siteConfig.workingHours}.
           </p>
         </div>
 
-        <div className={styles.right}>
-          <a href={`tel:${siteConfig.phone}`} className={`${styles.btn} ${styles.primaryBtn}`}>
-            <PhoneCall size={18} />
-            <span>{siteConfig.phoneDisplay}</span>
-          </a>
-
+        <div className={styles.actions}>
           <a
-            href={`https://wa.me/${siteConfig.whatsapp}`}
+            href={getWhatsAppUrl()}
             target="_blank"
             rel="noreferrer"
-            className={`${styles.btn} ${styles.whatsappBtn}`}
+            className={styles.primaryAction}
           >
-            <MessageCircle size={18} />
-            <span>WhatsApp’tan Yaz</span>
+            <MessageCircle size={19} />
+            WhatsApp’tan Randevu Al
           </a>
 
-          <a
-            href={siteConfig.instagram}
-            target="_blank"
-            rel="noreferrer"
-            className={`${styles.btn} ${styles.instagramBtn}`}
-          >
-            <FaInstagram size={18} />
-            <span>Instagram</span>
+          <a href={`tel:${siteConfig.phone}`} className={styles.secondaryAction}>
+            <PhoneCall size={19} />
+            {siteConfig.phoneDisplay}
           </a>
 
-          <a
-            href={siteConfig.maps}
-            target="_blank"
-            rel="noreferrer"
-            className={`${styles.btn} ${styles.mapBtn}`}
-          >
-            <MapPin size={18} />
-            <span>Konum Aç</span>
-          </a>
+          <div className={styles.smallLinks}>
+            <a href={siteConfig.maps} target="_blank" rel="noreferrer">
+              <MapPin size={15} /> Yol Tarifi
+            </a>
+            <a href={siteConfig.googleBusiness} target="_blank" rel="noreferrer">
+              <Star size={15} /> Google Yorumları
+            </a>
+            <a href={siteConfig.instagram} target="_blank" rel="noreferrer">
+              <FaInstagram size={15} /> Instagram
+            </a>
+            <ArrowUpRight size={15} aria-hidden="true" />
+          </div>
         </div>
       </div>
     </section>

@@ -2,86 +2,100 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState, useEffect } from "react";
-import { PhoneCall, Menu, X, MapPin } from "lucide-react";
-import { FaInstagram } from "react-icons/fa";
+import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
+import { Menu, X, PhoneCall, MapPin } from "lucide-react";
 import styles from "./Navbar.module.css";
 import { siteConfig } from "@/data/site";
 
-const navLinks = [
+type NavItem = {
+  href: string;
+  label: string;
+  section?: boolean;
+};
+
+const navLinks: NavItem[] = [
   { href: "/", label: "Ana Sayfa" },
+  { href: "/hizmetler", label: "Hizmetler" },
+  { href: "/#calismalar", label: "Çalışmalarımız", section: true },
+  { href: "/#yorumlar", label: "Yorumlar", section: true },
   { href: "/hakkimizda", label: "Hakkımızda" },
   { href: "/iletisim", label: "İletişim" },
 ];
 
 export default function Navbar() {
+  const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "unset";
-    }
-    
-    // Cleanup function in case component unmounts
+    document.body.style.overflow = isOpen ? "hidden" : "";
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setIsOpen(false);
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+
     return () => {
-      document.body.style.overflow = "unset";
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", onKeyDown);
     };
   }, [isOpen]);
 
+  const isActive = (item: NavItem) => {
+    if (item.section) return false;
+    if (item.href === "/") return pathname === "/";
+    return pathname === item.href || pathname.startsWith(`${item.href}/`);
+  };
+
   return (
     <header className={styles.header}>
-      <div className={styles.headerGlow} />
-
-      <nav className={styles.navbar}>
-        <Link href="/" className={styles.brand} onClick={() => setIsOpen(false)}>
-          <div className={styles.logoWrap}>
-            <Image
-              src="/images/logo/nzm-logo.png"
-              alt="NZM Motors Logo"
-              width={320}
-              height={160}
-              className={styles.logo}
-              priority
-            />
-          </div>
+      <nav className={styles.navbar} aria-label="Ana menü">
+        <Link href="/" className={styles.brand} aria-label="NZM Motors ana sayfa">
+          <Image
+            src="/images/logo/nzm-logo.png"
+            alt="NZM Motors"
+            width={1536}
+            height={1024}
+            className={styles.logo}
+            priority
+          />
         </Link>
 
         <div className={styles.desktopLinks}>
-          {navLinks.map((item) => (
-            <Link key={item.href} href={item.href} className={styles.navLink}>
-              {item.label}
-            </Link>
-          ))}
+          {navLinks.map((item) => {
+            const className = `${styles.navLink} ${isActive(item) ? styles.active : ""}`;
+
+            return item.section ? (
+              <a key={item.href} href={item.href} className={className}>
+                {item.label}
+              </a>
+            ) : (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={className}
+                aria-current={isActive(item) ? "page" : undefined}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
         </div>
 
         <div className={styles.desktopActions}>
           <a
-            href={siteConfig.instagram}
-            target="_blank"
-            rel="noreferrer"
-            className={`${styles.iconButton} ${styles.instagramButton}`}
-            aria-label="Instagram"
-          >
-            <FaInstagram size={18} />
-          </a>
-
-          <a
             href={siteConfig.maps}
             target="_blank"
             rel="noreferrer"
-            className={`${styles.iconButton} ${styles.locationButton}`}
-            aria-label="Konum"
+            className={styles.locationButton}
+            aria-label="Google Maps'te yol tarifi aç"
+            title="Yol tarifi"
           >
             <MapPin size={18} />
           </a>
 
-          <a 
-            href={`tel:${siteConfig.phone}`} 
-            className={styles.callButton}
-            title="Bizi arayın"
-          >
+          <a href={`tel:${siteConfig.phone}`} className={styles.callButton}>
             <PhoneCall size={18} />
             <span>Hemen Ara</span>
           </a>
@@ -90,56 +104,60 @@ export default function Navbar() {
         <button
           type="button"
           className={styles.menuButton}
-          onClick={() => setIsOpen((prev) => !prev)}
+          onClick={() => setIsOpen((current) => !current)}
+          aria-expanded={isOpen}
+          aria-controls="mobile-navigation"
           aria-label={isOpen ? "Menüyü kapat" : "Menüyü aç"}
         >
-          {isOpen ? <X size={22} /> : <Menu size={22} />}
+          {isOpen ? <X size={23} /> : <Menu size={23} />}
         </button>
       </nav>
 
-      <div className={`${styles.mobilePanel} ${isOpen ? styles.mobilePanelOpen : ""}`}>
-        <div className={styles.mobileLinks}>
-          {navLinks.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={styles.mobileLink}
-              onClick={() => setIsOpen(false)}
-            >
-              {item.label}
-            </Link>
-          ))}
+      <div
+        id="mobile-navigation"
+        className={`${styles.mobilePanel} ${isOpen ? styles.mobilePanelOpen : ""}`}
+        aria-hidden={!isOpen}
+      >
+        <div className={styles.mobileInner}>
+          <div className={styles.mobileLinks}>
+            {navLinks.map((item) => {
+              const className = `${styles.mobileLink} ${isActive(item) ? styles.mobileLinkActive : ""}`;
+
+              return item.section ? (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  className={className}
+                  onClick={() => setIsOpen(false)}
+                >
+                  {item.label}
+                </a>
+              ) : (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={className}
+                  onClick={() => setIsOpen(false)}
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
+          </div>
 
           <div className={styles.mobileActions}>
-            <a
-              href={`tel:${siteConfig.phone}`}
-              className={styles.mobileCall}
-              onClick={() => setIsOpen(false)}
-            >
+            <a href={`tel:${siteConfig.phone}`} className={styles.mobilePrimary}>
               <PhoneCall size={18} />
-              <span>Hemen Ara</span>
+              <span>{siteConfig.phoneDisplay}</span>
             </a>
-
-            <a
-              href={siteConfig.instagram}
-              target="_blank"
-              rel="noreferrer"
-              className={`${styles.mobileIconLink} ${styles.mobileInstagram}`}
-              onClick={() => setIsOpen(false)}
-            >
-              <FaInstagram size={18} />
-              <span>Instagram</span>
-            </a>
-
             <a
               href={siteConfig.maps}
               target="_blank"
               rel="noreferrer"
-              className={`${styles.mobileIconLink} ${styles.mobileLocation}`}
-              onClick={() => setIsOpen(false)}
+              className={styles.mobileSecondary}
             >
               <MapPin size={18} />
-              <span>Konum Aç</span>
+              <span>Yol Tarifi</span>
             </a>
           </div>
         </div>

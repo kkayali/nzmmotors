@@ -1,412 +1,178 @@
-/* --- Animasyon Tanımlamaları --- */
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes glowPulse {
-  0% { opacity: 0.6; transform: translateX(-50%) scale(1); }
-  50% { opacity: 1; transform: translateX(-50%) scale(1.05); }
-  100% { opacity: 0.6; transform: translateX(-50%) scale(1); }
-}
-
 .footer {
-  position: relative;
   background: #050505;
-  border-top: 1px solid rgba(255, 255, 255, 0.04);
-  overflow: hidden;
-  z-index: 1;
-}
-
-.footer::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(circle at top right, rgba(255, 0, 0, 0.05), transparent 25%),
-    linear-gradient(180deg, rgba(10, 10, 10, 0) 0%, #080808 100%);
-  z-index: -1;
-  pointer-events: none;
-}
-
-.topGlow {
-  position: absolute;
-  top: -100px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 600px;
-  height: 200px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(255, 0, 0, 0.08), transparent 70%);
-  filter: blur(40px);
-  pointer-events: none;
-  z-index: -1;
-  animation: glowPulse 6s infinite ease-in-out;
+  border-top: 1px solid var(--color-border);
 }
 
 .container {
-  position: relative;
-  z-index: 2;
-  width: min(1280px, calc(100% - 40px));
-  margin: 0 auto;
-  padding: 84px 0 64px;
+  width: min(var(--container), calc(100% - (var(--gutter) * 2)));
+  margin-inline: auto;
   display: grid;
-  grid-template-columns: 1.2fr 0.7fr 1fr 1fr;
-  gap: 48px;
+  grid-template-columns: minmax(260px, 1.35fr) repeat(3, minmax(160px, 0.65fr));
+  gap: clamp(30px, 5vw, 68px);
+  padding: 72px 0 58px;
 }
 
-/* --- Kolon Giriş Animasyonları (Stagger Effect) --- */
-.brandCol {
-  opacity: 0;
-  animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+.brandColumn p {
+  max-width: 390px;
+  margin: 22px 0 20px;
+  color: var(--color-text-muted);
+  font-size: 13px;
+  line-height: 1.75;
 }
 
-.col:nth-child(2) {
-  opacity: 0;
-  animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.15s forwards;
-}
-
-.col:nth-child(3) {
-  opacity: 0;
-  animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
-}
-
-.col:nth-child(4) {
-  opacity: 0;
-  animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.45s forwards;
-}
-
-/* --- Marka Alanı --- */
-.logoWrap {
+.logoLink {
   display: inline-flex;
-  margin-bottom: 24px;
-  text-decoration: none;
+  width: 150px;
+  height: 68px;
+  align-items: center;
+  overflow: hidden;
 }
 
 .logo {
+  width: 100%;
+  height: auto;
   object-fit: contain;
-  filter: drop-shadow(0 4px 12px rgba(255, 0, 0, 0.15));
-  transition: filter 0.3s ease, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.logoWrap:hover .logo {
-  filter: drop-shadow(0 8px 24px rgba(255, 0, 0, 0.25));
-  transform: scale(1.04) rotate(-1deg);
-}
-
-.brandCol p {
-  margin: 0 0 28px;
-  color: rgba(255, 255, 255, 0.7);
-  line-height: 1.8;
-  max-width: 420px;
-  font-size: 15px;
-}
-
-.brandActions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 14px;
-}
-
-.primaryAction,
-.secondaryAction {
+.whatsappLink {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  gap: 10px;
-  min-height: 52px;
-  padding: 0 20px;
-  border-radius: 14px;
-  text-decoration: none;
+  gap: 8px;
+  color: #ffffff;
+  font-size: 12px;
   font-weight: 800;
-  font-size: 15px;
-  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  text-decoration: none;
 }
 
-.primaryAction {
+.whatsappLink svg {
+  color: var(--color-whatsapp);
+}
+
+.column h2 {
+  margin: 0 0 20px;
   color: #ffffff;
-  background: linear-gradient(135deg, #cc0000, #800000);
-  box-shadow: 0 8px 24px rgba(204, 0, 0, 0.15);
-  border: 1px solid rgba(255, 0, 0, 0.1);
+  font-size: 17px;
+  line-height: 1;
+  text-transform: uppercase;
 }
 
-.secondaryAction {
-  color: #ffffff;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(8px);
-}
-
-.primaryAction:hover {
-  transform: translateY(-4px) scale(1.02);
-  box-shadow: 0 16px 32px rgba(204, 0, 0, 0.3);
-  background: linear-gradient(135deg, #e60000, #990000);
-}
-
-.secondaryAction:hover {
-  transform: translateY(-4px) scale(1.02);
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.2);
-}
-
-/* --- Kolon İçerikleri --- */
-.col h4 {
-  margin: 0 0 24px;
-  color: #ffffff;
-  font-size: 18px;
-  font-weight: 700;
-  letter-spacing: -0.3px;
-  position: relative;
-  display: inline-block;
-}
-
-/* Başlık altı minik kırmızı çizgi detayı */
-.col h4::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  bottom: -6px;
-  width: 24px;
-  height: 2px;
-  background: #cc0000;
-  border-radius: 2px;
-  transition: width 0.3s ease;
-}
-
-.col:hover h4::after {
-  width: 40px;
-}
-
-.links,
-.infoList {
+.linkList,
+.contactList,
+.socialList {
   display: grid;
   gap: 12px;
 }
 
-.menuLink,
-.infoItem {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 14px;
-  min-height: 54px;
-  padding: 0 16px;
-  border-radius: 16px;
+.linkList a,
+.contactList a,
+.contactList div,
+.socialLink,
+.mapLink {
+  color: var(--color-text-muted);
+  font-size: 12px;
+  line-height: 1.55;
   text-decoration: none;
-  color: rgba(255, 255, 255, 0.7);
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.04);
-  font-size: 15px;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: color var(--transition-fast);
 }
 
-.infoItem {
-  justify-content: flex-start;
-}
-
-.menuLink:hover,
-.infoItem:hover {
-  border-color: rgba(255, 60, 60, 0.3);
-  background: rgba(255, 255, 255, 0.06);
+.linkList a:hover,
+.contactList a:hover,
+.socialLink:hover,
+.mapLink:hover {
   color: #ffffff;
-  transform: translateX(6px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
-.linkIcon {
-  color: rgba(255, 255, 255, 0.3);
-  transition: color 0.3s ease, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+.contactList a,
+.contactList div {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 9px;
+  align-items: start;
 }
 
-.menuLink:hover .linkIcon,
-.mapLink:hover .linkIcon {
-  color: #ff4444;
-  transform: translate(3px, -3px) scale(1.1);
+.contactList svg {
+  margin-top: 1px;
+  color: #ff555b;
 }
 
-.iconBox {
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
-  display: inline-flex;
+.socialLink {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 9px;
   align-items: center;
-  justify-content: center;
-  background: rgba(255, 255, 255, 0.04);
-  color: #ff5555;
-  flex-shrink: 0;
-  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.3s ease;
+  padding: 13px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
 }
 
-.infoItem:hover .iconBox {
-  transform: scale(1.15) rotate(5deg);
-  background: rgba(255, 85, 85, 0.15);
-}
-
-.whatsappBox {
-  color: #25d366;
-  background: rgba(37, 211, 102, 0.1);
-}
-.infoItem:hover .whatsappBox {
-  background: rgba(37, 211, 102, 0.2);
-}
-
-.instagramBox {
-  color: #e1306c;
-  background: rgba(225, 48, 108, 0.1);
-}
-.infoItem:hover .instagramBox {
-  background: rgba(225, 48, 108, 0.2);
-}
-
-.addressCard {
-  padding: 20px;
-  border-radius: 20px;
-  background: linear-gradient(
-    145deg,
-    rgba(255, 255, 255, 0.03),
-    rgba(255, 255, 255, 0.01)
-  );
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  transition: border-color 0.3s ease;
-}
-
-.addressCard:hover {
-  border-color: rgba(255, 255, 255, 0.12);
-}
-
-.addressTop {
-  display: flex;
-  align-items: flex-start;
-  gap: 14px;
-  color: rgba(255, 255, 255, 0.7);
-  line-height: 1.7;
-  font-size: 15px;
-  margin-bottom: 20px;
+.socialLink > svg:first-child {
+  color: #ff555b;
 }
 
 .mapLink {
   display: inline-flex;
   align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  text-decoration: none;
-  color: #ffffff;
-  font-weight: 700;
-  font-size: 14px;
-  min-height: 48px;
-  padding: 0 16px;
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  gap: 6px;
+  margin-top: 14px;
 }
 
-.mapLink:hover {
-  border-color: rgba(255, 60, 60, 0.3);
-  background: rgba(255, 255, 255, 0.08);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+.bottomBar {
+  border-top: 1px solid var(--color-border);
 }
 
-/* --- Alt Kısım --- */
-.bottom {
-  position: relative;
-  z-index: 2;
-  border-top: 1px solid rgba(255, 255, 255, 0.04);
-  background: rgba(0, 0, 0, 0.3);
-  opacity: 0;
-  animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
-}
-
-.bottomContent {
-  width: min(1280px, calc(100% - 40px));
-  margin: 0 auto;
-  padding: 24px 0;
-  display: flex;
+.bottomInner {
+  width: min(var(--container), calc(100% - (var(--gutter) * 2)));
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: 1fr auto auto;
   align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 16px;
+  gap: 20px;
+  padding: 20px 0;
 }
 
-.bottomContent p {
+.bottomInner p,
+.bottomInner > span,
+.legalLinks a {
   margin: 0;
-  color: rgba(255, 255, 255, 0.5);
-  font-size: 14px;
+  color: #666666;
+  font-size: 11px;
 }
 
 .legalLinks {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
 }
 
 .legalLinks a {
-  color: rgba(255, 255, 255, 0.5);
   text-decoration: none;
-  font-size: 14px;
-  transition: color 0.3s ease;
 }
 
 .legalLinks a:hover {
   color: #ffffff;
 }
 
-.dot {
-  color: rgba(255, 255, 255, 0.2);
-  font-size: 12px;
-}
-
-/* --- Responsive & Mobil --- */
-@media (max-width: 1100px) {
+@media (max-width: 980px) {
   .container {
-    grid-template-columns: 1fr 1fr;
-    row-gap: 56px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
-@media (max-width: 768px) {
-  .container {
-    width: calc(100% - 32px);
+@media (max-width: 700px) {
+  .bottomInner {
     grid-template-columns: 1fr;
-    padding: 64px 0 56px;
-    row-gap: 48px;
+    gap: 8px;
   }
 
-  .brandCol p {
-    max-width: 100%;
-  }
-
-  .bottomContent {
-    flex-direction: column;
-    text-align: center;
-    justify-content: center;
-    padding-bottom: 90px;
+  .legalLinks {
+    flex-wrap: wrap;
   }
 }
 
-@media (max-width: 480px) {
-  .brandActions {
-    flex-direction: column;
-  }
-
-  .primaryAction,
-  .secondaryAction {
-    width: 100%;
-  }
-  
-  .logoWrap {
-    margin-bottom: 20px;
-  }
-
-  .logo {
-    height: 90px;
-    width: auto;
+@media (max-width: 600px) {
+  .container {
+    grid-template-columns: 1fr;
+    padding: 56px 0 44px;
   }
 }

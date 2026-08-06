@@ -1,273 +1,322 @@
 .section {
-  position: relative;
-  padding: 120px 0;
-  background:
-    radial-gradient(circle at left top, rgba(255, 0, 0, 0.05), transparent 30%),
-    linear-gradient(180deg, #050505 0%, #0a0a0a 100%);
+  padding-block: var(--section-space);
   overflow: hidden;
-  z-index: 1;
-}
-
-.bgGlow {
-  position: absolute;
-  top: 40%;
-  right: -10%;
-  width: 600px;
-  height: 600px;
-  background: radial-gradient(circle, rgba(255, 30, 30, 0.04) 0%, transparent 60%);
-  filter: blur(40px);
-  pointer-events: none;
-  z-index: -1;
+  background: var(--color-bg);
 }
 
 .container {
-  width: min(1280px, calc(100% - 40px));
-  margin: 0 auto;
+  width: min(var(--container), calc(100% - (var(--gutter) * 2)));
+  margin-inline: auto;
 }
 
-.sliderShell {
-  position: relative;
-  overflow: hidden;
-  padding: 24px 0 32px;
-  /* Kenarlardan yumuşak geçişli kaybolma efekti */
-  mask-image: linear-gradient(
-    to right,
-    transparent 0%,
-    rgba(0, 0, 0, 1) 12%,
-    rgba(0, 0, 0, 1) 88%,
-    transparent 100%
-  );
-  -webkit-mask-image: linear-gradient(
-    to right,
-    transparent 0%,
-    rgba(0, 0, 0, 1) 12%,
-    rgba(0, 0, 0, 1) 88%,
-    transparent 100%
-  );
-}
-
-.sliderTrack {
+.headingRow {
   display: flex;
-  align-items: stretch;
-  gap: 28px;
-  width: max-content;
-  animation: reelFlow 45s linear infinite;
-  will-change: transform; /* Performans optimizasyonu */
+  align-items: end;
+  justify-content: space-between;
+  gap: 32px;
+  margin-bottom: 38px;
 }
 
-/* Üzerine gelince slider dursun ki rahat okunsun */
-.sliderShell:hover .sliderTrack {
-  animation-play-state: paused;
+.headingRow > div {
+  margin-bottom: 0;
+}
+
+.instagramLink {
+  display: inline-flex;
+  min-height: 44px;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 8px;
+  padding: 0 15px;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  color: var(--color-text-soft);
+  font-size: 12px;
+  font-weight: 800;
+  text-decoration: none;
+  transition:
+    color var(--transition-fast),
+    border-color var(--transition-fast),
+    transform var(--transition-fast);
+}
+
+.instagramLink:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.3);
+  color: #ffffff;
+}
+
+.scroller {
+  display: grid;
+  grid-auto-columns: minmax(260px, 1fr);
+  grid-auto-flow: column;
+  gap: 14px;
+  overflow-x: auto;
+  padding: 4px 1px 16px;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: thin;
+  scrollbar-color: #474747 transparent;
+  overscroll-behavior-inline: contain;
+}
+
+.scroller::-webkit-scrollbar {
+  height: 7px;
+}
+
+.scroller::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: #474747;
 }
 
 .card {
-  width: clamp(240px, 22vw, 300px);
-  flex: 0 0 auto;
-  border-radius: 32px;
+  min-width: 0;
+  padding: 0;
   overflow: hidden;
-  background: linear-gradient(
-    145deg,
-    rgba(30, 30, 30, 0.6),
-    rgba(10, 10, 10, 0.8)
-  );
-  backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  box-shadow: 0 20px 42px rgba(0, 0, 0, 0.3);
-  cursor: pointer;
-  transition:
-    transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
-    border-color 0.4s ease,
-    box-shadow 0.4s ease;
-}
-
-.cardTiltLeft {
-  transform: rotate(-1.5deg) translateY(0);
-}
-
-.cardTiltRight {
-  transform: rotate(1.5deg) translateY(0);
-}
-
-.card:hover {
-  /* Hover'da kartı düzelt, biraz yukarı kaldır ve öne getir */
-  transform: translateY(-12px) rotate(0deg) scale(1.03) !important;
-  border-color: rgba(255, 60, 60, 0.3);
-  box-shadow: 
-    0 30px 60px rgba(0, 0, 0, 0.5),
-    0 0 20px rgba(255, 0, 0, 0.1);
-  z-index: 10;
+  border: 0;
+  border-radius: var(--radius-lg);
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  scroll-snap-align: start;
+  cursor: zoom-in;
 }
 
 .imageWrap {
   position: relative;
-  aspect-ratio: 9 / 16;
-  width: 100%;
+  aspect-ratio: 9 / 15;
   overflow: hidden;
-  background: #000;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
 }
 
 .image {
   object-fit: cover;
-  transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1), filter 0.7s ease;
-  filter: brightness(0.85) contrast(1.1) saturate(1.05);
+  filter: grayscale(0.72) brightness(0.68) contrast(1.08);
+  transition:
+    transform 420ms ease,
+    filter 320ms ease;
 }
 
-.card:hover .image {
-  transform: scale(1.08);
-  filter: brightness(0.95) contrast(1.15) saturate(1.1);
+.card:hover .image,
+.card:focus-visible .image {
+  transform: scale(1.035);
+  filter: grayscale(0) brightness(0.82) contrast(1.04);
 }
 
-.imageOverlay {
+.overlay {
   position: absolute;
   inset: 0;
-  background:
-    linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, transparent 40%),
-    linear-gradient(135deg, rgba(255, 0, 0, 0.15), transparent 40%);
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.03) 30%, rgba(0, 0, 0, 0.88) 100%);
   pointer-events: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
-/* Premium Instagram İkon Hover Efekti */
-.playIconWrap {
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  background: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transform: scale(0.8);
-  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+.index {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 2;
+  color: rgba(255, 255, 255, 0.7);
+  font-family: var(--font-heading), sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
 }
 
-.playIcon {
-  color: #ffffff;
-  /* Instagram gradyanı */
-  fill: url(#instagram-gradient); /* Eğer SVG içinde gradyan yoksa saf beyaz da şık durur */
-}
-
-.card:hover .playIconWrap {
-  opacity: 1;
-  transform: scale(1);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
-}
-
-.content {
-  padding: 22px 20px 24px;
-  position: relative;
+.caption {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  left: 20px;
   z-index: 2;
 }
 
-.content h3 {
-  margin: 0 0 10px;
+.caption h3 {
+  margin: 0 0 7px;
   color: #ffffff;
-  font-size: 21px;
-  line-height: 1.2;
-  font-weight: 800;
-  letter-spacing: -0.3px;
+  font-size: 25px;
+  line-height: 1;
+  text-transform: uppercase;
 }
 
-.content p {
+.caption p {
   margin: 0;
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 14px;
-  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 12px;
+  line-height: 1.6;
 }
 
-@keyframes reelFlow {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    /* Gap değerinin yarısı (28px / 2 = 14px) kusursuz döngü için önemlidir */
-    transform: translateX(calc(-50% - 14px));
+.openLabel {
+  display: inline-flex;
+  margin-top: 12px;
+  color: #ff666c;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.scrollHint {
+  margin: 12px 0 0;
+  color: #777777;
+  font-size: 11px;
+}
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  display: grid;
+  place-items: center;
+  padding: 28px 92px;
+  background: rgba(0, 0, 0, 0.92);
+  backdrop-filter: blur(12px);
+}
+
+.lightboxCard {
+  width: min(960px, 100%);
+  max-height: calc(100dvh - 56px);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 310px;
+  overflow: hidden;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-lg);
+  background: #0e0e0e;
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.55);
+}
+
+.lightboxImage {
+  position: relative;
+  min-height: min(78dvh, 760px);
+  background: #050505;
+}
+
+.lightboxPhoto {
+  object-fit: contain;
+}
+
+.lightboxCaption {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 28px;
+  border-left: 1px solid var(--color-border);
+}
+
+.lightboxCaption > span {
+  color: #ff6268;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+.lightboxCaption h3 {
+  margin: 14px 0 12px;
+  font-size: 38px;
+  line-height: 0.95;
+  text-transform: uppercase;
+}
+
+.lightboxCaption p {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 13px;
+  line-height: 1.75;
+}
+
+.closeButton,
+.navButton {
+  position: fixed;
+  z-index: 3002;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--color-border-strong);
+  color: #ffffff;
+  background: #161616;
+  cursor: pointer;
+}
+
+.closeButton {
+  top: 22px;
+  right: 22px;
+  width: 48px;
+  height: 48px;
+  border-radius: 15px;
+}
+
+.navButton {
+  top: 50%;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  transform: translateY(-50%);
+}
+
+.previous { left: 24px; }
+.next { right: 24px; }
+
+@media (min-width: 1120px) {
+  .scroller {
+    grid-auto-columns: calc((100% - 42px) / 4);
   }
 }
 
-/* --- Responsive & Mobil --- */
+@media (max-width: 800px) {
+  .lightbox {
+    padding: 72px 16px 18px;
+  }
 
-@media (max-width: 1100px) {
-  .card {
-    width: clamp(220px, 26vw, 280px);
+  .lightboxCard {
+    max-height: calc(100dvh - 90px);
+    grid-template-columns: 1fr;
+  }
+
+  .lightboxImage {
+    min-height: 62dvh;
+  }
+
+  .lightboxCaption {
+    padding: 18px;
+    border-top: 1px solid var(--color-border);
+    border-left: 0;
+  }
+
+  .lightboxCaption h3 {
+    font-size: 28px;
+  }
+
+  .navButton {
+    top: auto;
+    bottom: 22px;
+  }
+
+  .previous { left: 22px; }
+  .next { right: 22px; }
+}
+
+@media (max-width: 700px) {
+  .headingRow {
+    align-items: flex-start;
+    flex-direction: column;
+    margin-bottom: 28px;
+  }
+
+  .instagramLink {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .scroller {
+    grid-auto-columns: 78vw;
+  }
+
+  .caption h3 {
+    font-size: 23px;
   }
 }
 
-@media (max-width: 768px) {
-  .section {
-    padding: 80px 0;
-  }
-  
-  .sliderShell {
-    /* Mobilde maskelemeyi tamamen kapatmak yerine yumuşatıyoruz */
-    mask-image: linear-gradient(
-      to right,
-      transparent 0%,
-      rgba(0, 0, 0, 1) 6%,
-      rgba(0, 0, 0, 1) 94%,
-      transparent 100%
-    );
-    -webkit-mask-image: linear-gradient(
-      to right,
-      transparent 0%,
-      rgba(0, 0, 0, 1) 6%,
-      rgba(0, 0, 0, 1) 94%,
-      transparent 100%
-    );
-  }
-}
-
-@media (max-width: 580px) {
-  .section {
-    padding: 64px 0;
-  }
-
-  .container {
-    width: calc(100% - 24px);
-  }
-
-  .sliderTrack {
-    gap: 16px;
-    animation-duration: 38s; /* Mobilde biraz daha yavaş akabilir */
-  }
-
-  .card {
-    /* Ekranın tamamını kaplamaması için 60vw yapıyoruz, yanındaki kart görünsün */
-    width: 60vw; 
-    border-radius: 24px;
-  }
-
-  @keyframes reelFlow {
-    from {
-      transform: translateX(0);
-    }
-    to {
-      /* Mobildeki gap 16px, yarısı 8px */
-      transform: translateX(calc(-50% - 8px));
-    }
-  }
-
-  .content {
-    padding: 18px 16px 20px;
-  }
-
-  .content h3 {
-    font-size: 18px;
-    margin-bottom: 8px;
-  }
-
-  .content p {
-    font-size: 13px;
-    line-height: 1.6;
-  }
-  
-  /* Dokunmatik cihazlarda Play ikonunu sürekli hafifçe göster */
-  .playIconWrap {
-    opacity: 0.6;
-    transform: scale(0.85);
+@media (hover: none) {
+  .image {
+    filter: grayscale(0.25) brightness(0.76) contrast(1.05);
   }
 }

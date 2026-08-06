@@ -1,49 +1,79 @@
 .wrapper {
   max-width: 760px;
-  margin-bottom: 32px;
+  margin-bottom: 34px;
+}
+
+.center {
+  margin-inline: auto;
+  text-align: center;
 }
 
 .eyebrow {
   display: inline-flex;
   align-items: center;
-  min-height: 34px;
-  padding: 0 14px;
-  border-radius: 999px;
-  background: rgba(255, 0, 0, 0.08);
-  border: 1px solid rgba(255, 0, 0, 0.12);
-  color: #d31d1d;
-  font-size: 13px;
+  gap: 9px;
+  margin-bottom: 15px;
+  color: var(--color-brand);
+  font-size: 12px;
   font-weight: 800;
-  letter-spacing: 0.4px;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  margin-bottom: 14px;
+}
+
+.eyebrow::before {
+  content: "";
+  width: 22px;
+  height: 2px;
+  border-radius: 999px;
+  background: currentColor;
 }
 
 .title {
-  margin: 0 0 12px;
-  font-size: clamp(30px, 5vw, 52px);
-  line-height: 1.05;
-  letter-spacing: -1px;
+  margin: 0;
   color: #111111;
+  font-size: clamp(42px, 5.4vw, 66px);
+  font-weight: 700;
+  line-height: 0.98;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
 }
 
 .description {
-  margin: 0;
-  font-size: 17px;
-  line-height: 1.8;
-  color: #555555;
+  max-width: 720px;
+  margin: 18px 0 0;
+  color: #565656;
+  font-size: 16px;
+  line-height: 1.78;
+}
+
+.center .description {
+  margin-inline: auto;
 }
 
 .light .title {
-  color: #ffffff;
+  color: var(--color-text);
 }
 
 .light .description {
-  color: rgba(255, 255, 255, 0.78);
+  color: var(--color-text-soft);
 }
 
 .light .eyebrow {
-  background: rgba(255, 255, 255, 0.06);
-  border-color: rgba(255, 255, 255, 0.08);
-  color: #ff6565;
+  color: #ff5157;
+}
+
+@media (max-width: 700px) {
+  .wrapper {
+    margin-bottom: 28px;
+  }
+
+  .title {
+    font-size: clamp(38px, 11vw, 52px);
+  }
+
+  .description {
+    margin-top: 14px;
+    font-size: 15px;
+    line-height: 1.7;
+  }
 }

@@ -1,112 +1,106 @@
+import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import {
-  Wrench,
-  ShieldCheck,
-  Gauge,
-  PhoneCall,
-  MessageCircle,
-  MapPin,
+  ArrowUpRight,
   BadgeCheck,
+  CheckCircle2,
+  MessageCircle,
+  PhoneCall,
+  ScanSearch,
+  ShieldCheck,
+  Wrench,
 } from "lucide-react";
+import ContactStrip from "@/components/ContactStrip/ContactStrip";
+import { getWhatsAppUrl, siteConfig } from "@/data/site";
 import styles from "./page.module.css";
-import { siteConfig } from "@/data/site";
 
-const servicePoints = [
+export const metadata: Metadata = {
+  title: "Hakkımızda",
+  description:
+    "NZM Motors'un servis yaklaşımını, doğru teşhis, açık bilgilendirme ve titiz işçilik anlayışını yakından tanıyın.",
+};
+
+const principles = [
   {
-    icon: Wrench,
-    title: "Mekanik ve Motor İşlemleri",
-    text: "Periyodik bakım, motor onarım, revize, zincir değişimi, şanzıman ve yürüyen aksam işlemlerinde güçlü teknik yaklaşım sunuyoruz.",
+    icon: ScanSearch,
+    title: "Önce doğru teşhis",
+    text: "Belirtiyi değil, sorunun kaynağını anlamaya odaklanan kontrollü inceleme süreci.",
   },
   {
-    icon: Gauge,
-    title: "Doğru Arıza Tespiti",
-    text: "Sorunun kaynağını doğru analiz ederek gereksiz işlem ve parça değişiminden kaçınan, çözüm odaklı bir servis anlayışı benimsiyoruz.",
+    icon: BadgeCheck,
+    title: "Net bilgilendirme",
+    text: "İşlem kapsamı ve uygulanacak çözüm hakkında çalışma başlamadan önce açık iletişim.",
   },
   {
     icon: ShieldCheck,
-    title: "Güven ve İşçilik Kalitesi",
-    text: "Her araçta düzenli çalışma, temiz teslim, güçlü ekipman ve müşteri memnuniyeti odaklı hizmet standartlarıyla ilerliyoruz.",
+    title: "Titiz uygulama",
+    text: "Düzenli çalışma, kontrollü montaj ve teslim öncesi son kontrollerle tamamlanan servis süreci.",
   },
 ];
 
-const highlights = [
-  "Nazım Ateş liderliğinde güçlü servis anlayışı",
-  "Motor, şanzıman, bakım ve arıza tespiti uzmanlığı",
-  "Titiz işçilik ve güven veren uygulama standardı",
-  "Telefon ve WhatsApp üzerinden hızlı iletişim",
+const serviceFlow = [
+  "Araç ve şikâyet bilgisi alınır",
+  "Kontrol ve arıza tespiti yapılır",
+  "İşlem kapsamı netleştirilir",
+  "Onay sonrası uygulama tamamlanır",
 ];
 
 export default function Hakkimizda() {
   return (
-    <main className={styles.page}>
-      <section className={styles.hero}>
-        <div className={styles.heroOverlay} />
-        <div className={styles.heroGlow} />
+    <main id="main-content" className={styles.page}>
+      <section className={styles.hero} aria-labelledby="about-title">
+        <div className={styles.heroPattern} aria-hidden="true" />
 
         <div className={styles.container}>
           <div className={styles.heroGrid}>
-            <div className={styles.heroContent}>
-              <span className={styles.badge}>Hakkımızda</span>
-
-              <h1 className={styles.title}>
-                Gerçek İşçilik, Güvenilir Usta Dokunuşu ve Güçlü Servis Anlayışı
+            <div className={styles.heroCopy}>
+              <span className={styles.eyebrow}>NZM Motors’u Tanıyın</span>
+              <h1 id="about-title" className={styles.title}>
+                Güven, yapılan işi bilmekle başlar.
               </h1>
-
-              <p className={styles.description}>
-                NZM Motors olarak Nazım Ateş liderliğinde araç bakım, onarım,
-                arıza tespiti, motor işlemleri, şanzıman çözümleri, kaporta ve
-                mekanik uygulamalarda profesyonel hizmet sunuyoruz. Amacımız
-                yalnızca aracı onarmak değil; doğru teşhis, kaliteli işçilik ve
-                güven veren iletişim ile güçlü bir servis deneyimi oluşturmaktır.
+              <p className={styles.lead}>
+                Nazım Ateş liderliğinde; mekanik, motor, şanzıman, elektrik,
+                kaporta, bakım ve arıza tespit işlemlerinde kontrollü ve açık bir
+                servis deneyimi sunuyoruz.
               </p>
 
-              <div className={styles.actionRow}>
-                <a href={`tel:${siteConfig.phone}`} className={styles.primaryBtn}>
-                  <PhoneCall size={18} />
-                  <span>{siteConfig.phoneDisplay}</span>
-                </a>
-
+              <div className={styles.heroActions}>
                 <a
-                  href={`https://wa.me/${siteConfig.whatsapp}`}
+                  href={getWhatsAppUrl()}
                   target="_blank"
                   rel="noreferrer"
-                  className={styles.secondaryBtn}
+                  className={styles.primaryAction}
                 >
                   <MessageCircle size={18} />
-                  <span>WhatsApp ile Ulaşın</span>
+                  WhatsApp’tan Bilgi Al
                 </a>
+                <a href={`tel:${siteConfig.phone}`} className={styles.textAction}>
+                  <PhoneCall size={17} />
+                  {siteConfig.phoneDisplay}
+                </a>
+              </div>
 
-                <a
-                  href={siteConfig.maps}
-                  target="_blank"
-                  rel="noreferrer"
-                  className={styles.locationBtn}
-                >
-                  <MapPin size={18} />
-                  <span>Konum Aç</span>
-                </a>
+              <div className={styles.promise}>
+                <CheckCircle2 size={18} aria-hidden="true" />
+                <span>İşlem öncesi bilgilendirme, onay sonrası uygulama.</span>
               </div>
             </div>
 
             <div className={styles.heroVisual}>
-              <div className={styles.visualCard}>
+              <div className={styles.imageFrame}>
                 <Image
                   src="/images/about/about-cover.jpeg"
-                  alt="NZM Motors servis içi görünüm"
+                  alt="NZM Motors servisinde araç bakım ve motor çalışması"
                   fill
-                  className={styles.visualImage}
-                  sizes="(max-width: 980px) 100vw, 46vw"
+                  className={styles.image}
+                  sizes="(max-width: 900px) 100vw, 48vw"
+                  priority
                 />
-                <div className={styles.visualOverlay} />
-
-                <div className={styles.visualText}>
-                  <span className={styles.visualBadge}>NZM Motors</span>
-                  <h2>Profesyonel Servis Ortamı</h2>
-                  <p>
-                    Düzenli çalışma alanı, güçlü ekipman ve tecrübeli işçilik ile
-                    araç bakım ve onarım süreçlerinde güven veren bir servis
-                    deneyimi sunuyoruz.
-                  </p>
+                <div className={styles.imageShade} />
+                <div className={styles.imageCaption}>
+                  <span>Servis yaklaşımımız</span>
+                  <strong>Gerçek işçilik, açık iletişim</strong>
                 </div>
               </div>
             </div>
@@ -114,59 +108,33 @@ export default function Hakkimizda() {
         </div>
       </section>
 
-      <section className={styles.storySection}>
+      <section className={styles.principles} aria-labelledby="principles-title">
         <div className={styles.container}>
-          <div className={styles.storyGrid}>
-            <div className={styles.storyLeft}>
-              <span className={styles.sectionEyebrow}>Servis Anlayışımız</span>
-              <h2 className={styles.sectionTitle}>
-                Her Araçta Güven, Her İşlemde Titizlik
-              </h2>
-
-              <p className={styles.sectionText}>
-                NZM Motors’ta her araç, yalnızca teknik bir işlem olarak değil,
-                müşterinin güvenini taşıyan bir sorumluluk olarak ele alınır.
-                Bu nedenle bakım ve onarım süreçlerinde doğru teşhisi, şeffaf
-                yaklaşımı ve temiz işçiliği ön planda tutuyoruz.
-              </p>
-
-              <p className={styles.sectionText}>
-                Servis sürecinde aracın ihtiyacına uygun çözümler üretmeye,
-                gereksiz işlemden kaçınmaya ve yapılan işi uzun ömürlü hale
-                getirmeye odaklanıyoruz. Bizi ayıran en önemli nokta; güçlü
-                işçilik ile güven veren hizmeti bir araya getirmemizdir.
-              </p>
+          <div className={styles.sectionIntro}>
+            <div>
+              <span className={styles.eyebrow}>Çalışma standardımız</span>
+              <h2 id="principles-title">Aracınız servise girdiği andan teslim anına kadar</h2>
             </div>
-
-            <div className={styles.storyRight}>
-              <div className={styles.highlightList}>
-                {highlights.map((item) => (
-                  <div key={item} className={styles.highlightItem}>
-                    <BadgeCheck size={18} />
-                    <span>{item}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
+            <p>
+              Amaç yalnızca parçayı değiştirmek değil; ihtiyacı doğru belirlemek,
+              süreci anlaşılır biçimde yönetmek ve yapılan işi kontrol ederek
+              teslim etmektir.
+            </p>
           </div>
-        </div>
-      </section>
 
-      <section className={styles.servicesSection}>
-        <div className={styles.container}>
-          <span className={styles.sectionEyebrow}>Neler Sunuyoruz</span>
-          <h2 className={styles.sectionTitle}>Güçlü Hizmet Yapımız</h2>
-
-          <div className={styles.serviceGrid}>
-            {servicePoints.map((item) => {
+          <div className={styles.principleGrid}>
+            {principles.map((item, index) => {
               const Icon = item.icon;
-
               return (
-                <article key={item.title} className={styles.serviceCard}>
-                  <div className={styles.serviceIcon}>
-                    <Icon size={20} />
+                <article key={item.title} className={styles.principleCard}>
+                  <div className={styles.cardTop}>
+                    <span className={styles.cardIcon} aria-hidden="true">
+                      <Icon size={21} strokeWidth={1.8} />
+                    </span>
+                    <span className={styles.cardNumber}>
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
                   </div>
-
                   <h3>{item.title}</h3>
                   <p>{item.text}</p>
                 </article>
@@ -175,6 +143,47 @@ export default function Hakkimizda() {
           </div>
         </div>
       </section>
+
+      <section className={styles.workflow} aria-labelledby="workflow-title">
+        <div className={styles.container}>
+          <div className={styles.workflowPanel}>
+            <div className={styles.workflowCopy}>
+              <span className={styles.eyebrow}>Servis süreci</span>
+              <h2 id="workflow-title">Belirsizliği azaltan net bir çalışma düzeni</h2>
+              <p>
+                Araç kontrolünden teslim aşamasına kadar sürecin her adımı
+                ihtiyaca göre planlanır ve uygulanacak işlem müşteriye aktarılır.
+              </p>
+              <Link href="/#hizmetler" className={styles.servicesLink}>
+                Hizmetleri inceleyin
+                <ArrowUpRight size={17} />
+              </Link>
+            </div>
+
+            <ol className={styles.flowList}>
+              {serviceFlow.map((item, index) => (
+                <li key={item}>
+                  <span>{String(index + 1).padStart(2, "0")}</span>
+                  <strong>{item}</strong>
+                </li>
+              ))}
+            </ol>
+
+            <div className={styles.ownerCard}>
+              <span className={styles.ownerIcon} aria-hidden="true">
+                <Wrench size={22} strokeWidth={1.8} />
+              </span>
+              <div>
+                <small>Usta</small>
+                <strong>{siteConfig.owner}</strong>
+                <p>NZM Motors servis yönetimi ve uygulama takibi</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <ContactStrip />
     </main>
   );
 }

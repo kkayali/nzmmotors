@@ -1,119 +1,76 @@
-"use client";
-
-import { motion } from "framer-motion";
-import { PhoneCall, MessageCircle, MapPin, UserCircle2 } from "lucide-react";
+import Image from "next/image";
+import { ArrowUpRight, MapPin, MessageCircle, PhoneCall } from "lucide-react";
 import styles from "./Hero.module.css";
-import { siteConfig } from "@/data/site";
+import { getWhatsAppUrl, siteConfig } from "@/data/site";
 
 export default function Hero() {
   return (
-    <section className={styles.hero}>
-      <div className={styles.photoSide} />
-      <div className={styles.photoShade} />
-      <div className={styles.overlay} />
-      <div className={styles.glowLeft} />
-      <div className={styles.glowRight} />
-      <div className={styles.gridLines} />
+    <section className={styles.hero} aria-labelledby="hero-title">
+      <div className={styles.container}>
+        <div className={styles.content}>
+          <div className={styles.eyebrow}>
+            <span className={styles.eyebrowDot} aria-hidden="true" />
+            Akınsal Sanayi Sitesi’nde profesyonel oto servis
+          </div>
 
-      <div className={styles.content}>
-        <motion.span
-          className={styles.badge}
-          initial={{ opacity: 0, y: 14 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.55 }}
-        >
-          Profesyonel Oto Servis Deneyimi
-        </motion.span>
+          <h1 id="hero-title" className={styles.title}>
+            Aracınızı güvenle teslim edebileceğiniz
+            <span> güçlü servis işçiliği.</span>
+          </h1>
 
-        <motion.h1
-          className={styles.title}
-          initial={{ opacity: 0, y: 26 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.65, delay: 0.05 }}
-        >
-          Güvenilir Usta Dokunuşu,
-          <span> Güçlü Servis Deneyimi</span>
-        </motion.h1>
+          <p className={styles.description}>
+            Nazım Ateş liderliğinde motor, mekanik, şanzıman, elektrik, kaporta,
+            periyodik bakım ve arıza tespit işlemlerinde doğru teşhis ve titiz
+            uygulama sunuyoruz.
+          </p>
 
-        <motion.p
-          className={styles.description}
-          initial={{ opacity: 0, y: 26 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.65, delay: 0.12 }}
-        >
-          Nazım Ateş liderliğinde mekanik, elektrik, kaporta, bakım, arıza
-          tespiti, yürüyen aksam ve fren sistemlerinde profesyonel, hızlı ve
-          güvenilir oto servis hizmeti sunuyoruz.
-        </motion.p>
+          <div className={styles.actionArea}>
+            <a
+              href={getWhatsAppUrl()}
+              target="_blank"
+              rel="noreferrer"
+              className={styles.primaryAction}
+            >
+              <MessageCircle size={20} />
+              <span>WhatsApp’tan Randevu Al</span>
+              <ArrowUpRight size={18} />
+            </a>
 
-        <motion.div
-          className={styles.actions}
-          initial={{ opacity: 0, y: 26 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.65, delay: 0.2 }}
-        >
-          <a href={`tel:${siteConfig.phone}`} className={styles.primaryBtn}>
-            <PhoneCall size={18} />
-            <span>Hemen Ara</span>
-          </a>
-
-          <a
-            href={`https://wa.me/${siteConfig.whatsapp}`}
-            target="_blank"
-            rel="noreferrer"
-            className={styles.whatsappBtn}
-          >
-            <MessageCircle size={18} />
-            <span>WhatsApp’tan Yaz</span>
-          </a>
-
-          <a
-            href={siteConfig.maps}
-            target="_blank"
-            rel="noreferrer"
-            className={styles.locationBtn}
-          >
-            <MapPin size={18} />
-            <span>Konum Aç</span>
-          </a>
-        </motion.div>
-
-        <motion.div
-          className={styles.infoRow}
-          initial={{ opacity: 0, y: 26 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.65, delay: 0.28 }}
-        >
-          <div className={styles.infoCard}>
-            <div className={styles.infoIcon}>
-              <UserCircle2 size={18} />
-            </div>
-            <div>
-              <strong>Usta</strong>
-              <span>{siteConfig.owner}</span>
+            <div className={styles.quickLinks} aria-label="Hızlı iletişim bağlantıları">
+              <a href={`tel:${siteConfig.phone}`}>
+                <PhoneCall size={16} />
+                <span>{siteConfig.phoneDisplay}</span>
+              </a>
+              <span className={styles.separator} aria-hidden="true" />
+              <a href={siteConfig.maps} target="_blank" rel="noreferrer">
+                <MapPin size={16} />
+                <span>Yol Tarifi</span>
+              </a>
             </div>
           </div>
 
-          <div className={styles.infoCard}>
-            <div className={styles.infoIcon}>
-              <PhoneCall size={18} />
-            </div>
-            <div>
-              <strong>Telefon</strong>
-              <span>{siteConfig.phoneDisplay}</span>
-            </div>
+          <div className={styles.proofRow}>
+            <span>Doğru teşhis</span>
+            <span>İşlem öncesi bilgilendirme</span>
+            <span>Temiz ve titiz işçilik</span>
           </div>
+        </div>
 
-          <div className={styles.infoCard}>
-            <div className={styles.infoIcon}>
-              <MapPin size={18} />
-            </div>
-            <div>
-              <strong>Konum</strong>
-              <span>Maltepe / Akınsal Sanayi Sitesi</span>
-            </div>
+        <div className={styles.visual} aria-label="NZM Motors servis görünümü">
+          <Image
+            src="/images/hero/nzm-garage.png"
+            alt="NZM Motors servis dış görünümü ve servis önündeki araçlar"
+            fill
+            priority
+            sizes="(max-width: 900px) 100vw, 48vw"
+            className={styles.image}
+          />
+          <div className={styles.imageShade} />
+          <div className={styles.visualBadge}>
+            <span className={styles.visualBadgeLabel}>NZM Motors</span>
+            <strong>Gerçek servis. Gerçek işçilik.</strong>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );
