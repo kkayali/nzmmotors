@@ -1,3 +1,5 @@
+// Dosya: app/layout.tsx
+
 import type { Metadata, Viewport } from "next";
 import { Barlow_Condensed, Manrope } from "next/font/google";
 import Navbar from "@/components/Navbar/Navbar";
@@ -66,7 +68,8 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "NZM Motors | İstanbul Oto Servis",
-    description: "Motor, mekanik, arıza tespiti ve periyodik bakım hizmetleri.",
+    description:
+      "Motor, mekanik, arıza tespiti ve periyodik bakım hizmetleri.",
     images: ["/images/hero/nzm-garage.png"],
   },
   robots: {
@@ -98,15 +101,31 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="tr" className={`${manrope.variable} ${barlowCondensed.variable}`}>
+    <html
+      lang="tr"
+      className={`${manrope.variable} ${barlowCondensed.variable}`}
+      data-scroll-behavior="smooth"
+    >
+      <head>
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8230285568916898"
+          crossOrigin="anonymous"
+        />
+      </head>
+
       <body>
         <StructuredData />
         <Analytics />
+
         <a className="skipLink" href="#main-content">
           İçeriğe geç
         </a>
+
         <Navbar />
+
         {children}
+
         <Footer />
         <WhatsAppButton />
         <MobileActionBar />
