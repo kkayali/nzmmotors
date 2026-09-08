@@ -3,7 +3,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Script from "next/script";
 
 declare global {
   interface Window {
@@ -14,21 +13,28 @@ declare global {
 
 const CONSENT_KEY = "nzm-cookie-consent";
 const CONSENT_EVENT = "nzm-consent-changed";
-const GOOGLE_ADS_ID = "AW-18432072846";
+
+function updateGoogleConsent(hasConsent: boolean) {
+  const consentValue = hasConsent ? "granted" : "denied";
+
+  window.gtag?.("consent", "update", {
+    ad_storage: consentValue,
+    ad_user_data: consentValue,
+    ad_personalization: consentValue,
+    analytics_storage: consentValue,
+  });
+}
 
 export default function Analytics() {
-  const gaId = process.env.NEXT_PUBLIC_GA_ID;
-  const adsId =
-    process.env.NEXT_PUBLIC_GOOGLE_ADS_ID || GOOGLE_ADS_ID;
-
   const [hasConsent, setHasConsent] = useState(false);
 
   useEffect(() => {
     const syncConsent = () => {
-      const consent =
+      const accepted =
         window.localStorage.getItem(CONSENT_KEY) === "accepted";
 
-      setHasConsent(consent);
+      setHasConsent(accepted);
+      updateGoogleConsent(accepted);
     };
 
     syncConsent();
@@ -66,7 +72,10 @@ export default function Analytics() {
         eventName = "directions_click";
       } else if (href.includes("instagram.com")) {
         eventName = "instagram_click";
-      } else if (href.includes("share.google")) {
+      } else if (
+        href.includes("share.google") ||
+        href.includes("g.page")
+      ) {
         eventName = "google_business_click";
       }
 
@@ -87,44 +96,5 @@ export default function Analytics() {
     };
   }, [hasConsent]);
 
-  const primaryId = gaId || adsId;
-
-  if (!primaryId || !hasConsent) {
-    return null;
-  }
-
-  return (
-    <>
-      <Script
-        id="nzm-google-tag-loader"
-        src={`https://www.googletagmanager.com/gtag/js?id=${primaryId}`}
-        strategy="afterInteractive"
-      />
-
-      <Script id="nzm-google-tag-configuration" strategy="afterInteractive">
-        {`
-          window.dataLayer = window.dataLayer || [];
-
-          function gtag() {
-            dataLayer.push(arguments);
-          }
-
-          window.gtag = gtag;
-
-          gtag('js', new Date());
-
-          ${
-            gaId
-              ? `gtag('config', '${gaId}', {
-                  anonymize_ip: true,
-                  send_page_view: true
-                });`
-              : ""
-          }
-
-          gtag('config', '${adsId}');
-        `}
-      </Script>
-    </>
-  );
+  return null;
 }
