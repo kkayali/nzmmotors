@@ -4,9 +4,9 @@ export const siteConfig = {
   name: "NZM Motors",
   owner: "Nazım Ateş",
   url: baseUrl,
-  phone: "05359216505",
-  phoneDisplay: "0535 921 65 05",
-  whatsapp: "905359216505",
+  phone: "05551430429",
+  phoneDisplay: "0555 143 04 29",
+  whatsapp: "905551430429",
   whatsappMessage:
     "Merhaba, aracımla ilgili servis ve randevu bilgisi almak istiyorum.",
   instagram: "https://www.instagram.com/nzm_motors/",
